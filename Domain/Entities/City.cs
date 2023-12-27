@@ -13,6 +13,7 @@ namespace Domain.Entities
         public string CountryName { get; set; }
         public string PostOffice { get; set; }
         public string CountryCode { get; set; }
+        public List<Hotels> Hotels { get; set; }
 
     }
 }

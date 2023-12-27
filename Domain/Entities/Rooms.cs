@@ -15,6 +15,7 @@ namespace Domain.Entities
         public int ChildrenCapacity { get; set; }
         public string View { get; set; }
         public float Rating { get; set; }
+        public List<Bookings> Bookings { get; set; }
 
     }
 }

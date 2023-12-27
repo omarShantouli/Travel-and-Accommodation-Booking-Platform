@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Infrastructure.Data.Entities_Seeding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Nest.Specification.MigrationApi;
@@ -34,6 +35,17 @@ namespace Infrastructure.Data
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             base.OnModelCreating(builder);
+
+            // Seeding Entities
+            builder.Entity<Bookings>().HasData(BookingsSeeding.SeedData());
+            builder.Entity<City>().HasData(CitySeeding.SeedData());
+            builder.Entity<Guest>().HasData(GuestSeeding.SeedData());
+            builder.Entity<Hotels>().HasData(HotelsSeeding.SeedData());
+            builder.Entity<Owner>().HasData(OwnerSeeding.SeedData());
+            builder.Entity<Payments>().HasData(PaymentsSeeding.SeedData());
+            builder.Entity<Reviews>().HasData(ReviewsSeeding.SeedData());
+            builder.Entity<Rooms>().HasData(RoomsSeeding.SeedData());
+            builder.Entity<RoomTypes>().HasData(RoomTypesSeeding.SeedData());
         }
     }
 }

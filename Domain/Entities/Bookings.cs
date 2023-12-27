@@ -14,5 +14,7 @@ namespace Domain.Entities
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
         public DateTime BookingDate { get; set; }
+        public Guest Guest { get; set; }
+        public Rooms Room { get; set; }
     }
 }

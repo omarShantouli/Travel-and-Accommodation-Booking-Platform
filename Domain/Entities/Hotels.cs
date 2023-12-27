@@ -17,5 +17,7 @@ namespace Domain.Entities
         public string Description { get; set; }
         public string Phone { get; set; }
         public int FloorsNumber { get; set; }
+        public City City { get; set; }
+        public Owner Owner { get; set; }
     }
 }
