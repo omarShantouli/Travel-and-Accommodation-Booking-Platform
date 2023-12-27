@@ -8,8 +8,8 @@ namespace Domain.Entities
 {
     public class RoomTypes
     {
-        public int Id { get; set; }
-        public int HotelId { get; set; }
+        public Guid Id { get; set; }
+        public Guid HotelId { get; set; }
         public string Type { get; set; }
         public float PricePerNight { get; set; }
     }

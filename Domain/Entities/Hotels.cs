@@ -8,9 +8,9 @@ namespace Domain.Entities
 {
     public class Hotels
     {
-        public int Id { get; set; }
-        public int CityId { get; set; }
-        public int OwnerId { get; set; }
+        public Guid Id { get; set; }
+        public Guid CityId { get; set; }
+        public Guid OwnerId { get; set; }
         public string Name { get; set; }
         public float Rating { get; set; }
         public string StreetAddress { get; set; }

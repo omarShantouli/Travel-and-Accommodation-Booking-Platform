@@ -8,10 +8,10 @@ namespace Domain.Entities
 {
     public class Payments
     {
-        public int Id { get; set; }
-        public int BookingId { get; set; }
+        public Guid Id { get; set; }
+        public Guid BookingId { get; set; }
         public string Method { get; set; }
         public string Status { get; set; }
-        public Type Amount { get; set; }
+        public double Amount { get; set; }
     }
 }
