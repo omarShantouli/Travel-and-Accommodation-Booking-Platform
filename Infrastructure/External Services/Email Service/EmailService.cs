@@ -4,12 +4,12 @@ using System.Net;
 
 namespace Infrastructure.External_Services
 {
-    public class EmailSender : IEmailSender
+    public class EmailService : IEmailService
     {
         private readonly SmtpClient smtpClient;
         private readonly string fromEmail;
 
-        public EmailSender(string smtpServer, int smtpPort, string smtpUsername, string smtpPassword, string fromEmail)
+        public EmailService(string smtpServer, int smtpPort, string smtpUsername, string smtpPassword, string fromEmail)
         {
             this.smtpClient = new SmtpClient(smtpServer, smtpPort)
             {
