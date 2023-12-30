@@ -1,5 +1,10 @@
+using AutoMapper;
+using Domain.Entities;
 using Domain.Interfaces;
+using FluentAssertions.Common;
+using Infrastructure.Data.Repositories;
 using Infrastructure.External_Services;
+using static Domain.Interfaces.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +16,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IEmailService, EmailService>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<IRepository<City>, CityRepository>();
 
 var app = builder.Build();
 
