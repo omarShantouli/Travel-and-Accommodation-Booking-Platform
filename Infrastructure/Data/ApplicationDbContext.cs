@@ -38,6 +38,7 @@ namespace Infrastructure.Data
 
             // Seeding Entities
             builder.Entity<Bookings>().HasData(BookingsSeeding.SeedData());
+            builder.Entity<Images>().HasData(ImagesSeeding.SeedData());
             builder.Entity<City>().HasData(CitySeeding.SeedData());
             builder.Entity<Guest>().HasData(GuestSeeding.SeedData());
             builder.Entity<Hotels>().HasData(HotelsSeeding.SeedData());

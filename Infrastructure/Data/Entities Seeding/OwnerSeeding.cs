@@ -13,11 +13,11 @@ namespace Infrastructure.Data.Entities_Seeding
         {
             return new Owner
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("a1d1aa11-12e7-4e0f-8425-67c1c1e62c2d"),
                 FirstName = "Omar",
                 LastName = "Hantouli",
                 Email = "hantoli797@gmail.com",
-                Phone = "+972598191973",
+                Phone = "0598191973",
             };
         }
     }

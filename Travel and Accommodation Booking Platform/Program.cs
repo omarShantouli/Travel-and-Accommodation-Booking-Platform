@@ -15,9 +15,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddTransient<IEmailService, EmailService>();
+//builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddScoped<IRepository<City>, CityRepository>();
+//builder.Services.AddScoped<IRepository<City>, CityRepository>();
 
 var app = builder.Build();
 

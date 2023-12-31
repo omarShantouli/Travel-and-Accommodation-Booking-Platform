@@ -13,7 +13,23 @@ namespace Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Images> builder)
         {
-            
+            builder.HasKey(i => i.Id);
+
+            builder.Property(i => i.EntityId)
+                .IsRequired();
+
+            builder.Property(i => i.EntityType)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            builder.Property(i => i.URL)
+                .IsRequired()
+                .HasMaxLength(1000); 
+
+            builder.Property(i => i.Type)
+                .IsRequired()
+                .HasMaxLength(255);
+
         }
     }
 }

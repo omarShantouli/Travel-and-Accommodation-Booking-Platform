@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,8 +15,14 @@ namespace Domain.Entities
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
         public DateTime BookingDate { get; set; }
+
+        [NotMapped]
         public Guest Guest { get; set; }
+
+        [NotMapped]
         public Rooms Room { get; set; }
+
+        [NotMapped]
         public Reviews? Review { get; set; }
     }
 }

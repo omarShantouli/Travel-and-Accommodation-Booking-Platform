@@ -30,7 +30,7 @@ namespace Infrastructure.Data.Configurations
                 .HasColumnName("EmailAddress");
 
             builder.Property(o => o.Phone)
-                .HasMaxLength(20);
+                .HasMaxLength(25);
         }
     }
 }

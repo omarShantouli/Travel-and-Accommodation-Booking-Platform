@@ -8,5 +8,6 @@ namespace Infrastructure.Data.Entities_Seeding
 {
     public class AppUserSeeding
     {
+
     }
 }

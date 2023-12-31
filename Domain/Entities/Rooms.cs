@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Domain.Entities
 {
     public class Rooms
     {
@@ -9,6 +11,8 @@
         public int ChildrenCapacity { get; set; }
         public string View { get; set; }
         public float Rating { get; set; }
+
+        [NotMapped]
         public List<Bookings> Bookings { get; set; }
 
     }

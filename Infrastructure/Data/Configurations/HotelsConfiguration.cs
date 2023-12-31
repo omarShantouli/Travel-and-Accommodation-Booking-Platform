@@ -20,8 +20,7 @@ namespace Infrastructure.Data.Configurations
                 .HasMaxLength(255);
 
             builder.Property(h => h.Rating)
-                .IsRequired()
-                .HasPrecision(3, 2);
+                .IsRequired();
 
             builder.Property(h => h.StreetAddress)
                 .IsRequired()
@@ -31,7 +30,7 @@ namespace Infrastructure.Data.Configurations
                 .HasMaxLength(1000);
 
             builder.Property(h => h.Phone)
-                .HasMaxLength(20);
+                .HasMaxLength(25);
 
             builder.Property(h => h.FloorsNumber)
                 .IsRequired();
