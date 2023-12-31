@@ -2,6 +2,7 @@
 using Application.Queries;
 using AutoMapper;
 using Domain.Entities;
+using Domain.Enums;
 using MediatR;
 using static Domain.Interfaces.IRepository;
 
@@ -22,7 +23,8 @@ namespace Application.Handlers
         {
             var images = _imageRepository.GetAll();
 
-            var cityImages = images.Where(image => image.EntityId == request.CityId);
+            var cityImages = images.Where(image => image.EntityId == request.CityId
+                                          && image.EntityType == EntityType.City.ToString());
 
             var imagesDtos = _mapper.Map<List<ImageDto>>(cityImages);
 

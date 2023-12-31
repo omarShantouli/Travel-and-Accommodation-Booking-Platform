@@ -22,13 +22,17 @@ namespace Application.Handlers
             {
                 throw new EntityNotFoundException($"Image with ID {request.ImageId} is not found!");
             }
-            else
+
+            if (imageToRemove.EntityId == request.CityId)
             {
                 _imageRepository.Delete(request.ImageId);
 
                 await _imageRepository.SaveChangesAsync();
             }
-            
+            else
+                throw new EntityNotFoundException($"City with ID {request.CityId} does not " +
+                                                    $"have an Image with ID {request.ImageId}!");
+
         }
 
     }

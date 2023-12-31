@@ -19,5 +19,6 @@ namespace Domain.Entities
         public int FloorsNumber { get; set; }
         public City City { get; set; }
         public Owner Owner { get; set; }
+        public List<Rooms> Rooms { get; set; }
     }
 }

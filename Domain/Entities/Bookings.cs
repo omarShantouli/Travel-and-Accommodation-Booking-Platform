@@ -16,5 +16,6 @@ namespace Domain.Entities
         public DateTime BookingDate { get; set; }
         public Guest Guest { get; set; }
         public Rooms Room { get; set; }
+        public Reviews? Review { get; set; }
     }
 }
