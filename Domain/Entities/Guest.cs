@@ -14,8 +14,6 @@ namespace Domain.Entities
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-
-        [NotMapped]
         public List<Bookings> Bookings { get; set; }
     }
 }

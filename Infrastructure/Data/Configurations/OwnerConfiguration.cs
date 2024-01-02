@@ -31,6 +31,7 @@ namespace Infrastructure.Data.Configurations
 
             builder.Property(o => o.Phone)
                 .HasMaxLength(25);
+
         }
     }
 }

@@ -10,11 +10,14 @@ namespace Application.Handlers
     public class AddRoomInHotelCommandHandler : IRequestHandler<AddRoomInHotelCommand>
     {
         private readonly IRepository<Hotels> _hotelRepository;
+        private readonly IRepository<Rooms> _roomRepository;
         private readonly IMapper _mapper;
 
-        public AddRoomInHotelCommandHandler(IRepository<Hotels> hotelRepository, IMapper mapper)
+        public AddRoomInHotelCommandHandler(IRepository<Hotels> hotelRepository,
+                                            IRepository<Rooms> roomRepository, IMapper mapper)
         {
             _hotelRepository = hotelRepository;
+            _roomRepository = roomRepository;
             _mapper = mapper;
         }
 
@@ -27,9 +30,13 @@ namespace Application.Handlers
             }
 
             var room = _mapper.Map<Rooms>(request.Room);
-
+            _roomRepository.Create(room);
+            await _roomRepository.SaveChangesAsync();
             hotel.Rooms.Add(room);
+
             await _hotelRepository.SaveChangesAsync();
+            Console.WriteLine("==========>  " + room.View);
+
         }
     }
 }

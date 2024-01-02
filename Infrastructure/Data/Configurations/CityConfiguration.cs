@@ -29,6 +29,7 @@ namespace Infrastructure.Data.Configurations
             builder.Property(c => c.CountryCode)
                 .IsRequired()
                 .HasMaxLength(15);
+
         }
     }
 }

@@ -26,6 +26,7 @@ namespace Infrastructure.Data.Configurations
 
             builder.Property(r => r.Rating)
                 .IsRequired();
+
         }
     }
 }

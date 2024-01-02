@@ -10,11 +10,14 @@ namespace Application.Handlers
     public class AddHotelInCityCommandHandler : IRequestHandler<AddHotelInCityCommand>
     {
         private readonly IRepository<City> _cityRepository;
+        private readonly IRepository<Hotels> _hotelRepository;
         private readonly IMapper _mapper;
 
-        public AddHotelInCityCommandHandler(IRepository<City> cityRepository, IMapper mapper)
+        public AddHotelInCityCommandHandler(IRepository<City> cityRepository,
+                                            IRepository<Hotels> hotelRepository, IMapper mapper)
         {
             _cityRepository = cityRepository;
+            _hotelRepository = hotelRepository;
             _mapper = mapper;
         }
 
@@ -27,6 +30,8 @@ namespace Application.Handlers
             }
 
             var hotel = _mapper.Map<Hotels>(request.Hotel);
+            _hotelRepository.Create(hotel);
+            await _hotelRepository.SaveChangesAsync();
 
             city.Hotels.Add(hotel);
             await _cityRepository.SaveChangesAsync();

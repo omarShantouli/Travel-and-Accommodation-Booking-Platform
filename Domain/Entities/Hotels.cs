@@ -18,14 +18,8 @@ namespace Domain.Entities
         public string Description { get; set; }
         public string Phone { get; set; }
         public int FloorsNumber { get; set; }
-
-        [NotMapped]
         public City City { get; set; }
-
-        [NotMapped]
         public Owner Owner { get; set; }
-
-        [NotMapped]
         public List<Rooms> Rooms { get; set; }
     }
 }

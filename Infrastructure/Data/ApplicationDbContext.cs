@@ -1,8 +1,7 @@
 ﻿using Domain.Entities;
 using Infrastructure.Data.Entities_Seeding;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Nest.Specification.MigrationApi;
+using Microsoft.EntityFrameworkCore.Infrastructure; 
 using System.Reflection;
 
 
@@ -23,6 +22,7 @@ namespace Infrastructure.Data
         public DbSet<Reviews> Reviews { get; set; }
         public DbSet<Rooms> Rooms { get; set; }
         public DbSet<RoomTypes> RoomTypes { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

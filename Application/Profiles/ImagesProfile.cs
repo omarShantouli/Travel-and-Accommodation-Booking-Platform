@@ -14,6 +14,7 @@ namespace Application.Profiles
         public ImagesProfile()
         {
             CreateMap<Images, ImageDto>();
+            CreateMap<ImageDto, Images>();
         }
     }
 }

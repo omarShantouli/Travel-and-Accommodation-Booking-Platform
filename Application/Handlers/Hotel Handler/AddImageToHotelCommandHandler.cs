@@ -27,7 +27,7 @@ namespace Application.Handlers.Hotel_Handler
         public async Task Handle(AddImageToHotelCommand request, CancellationToken cancellationToken)
         {
             var image = _mapper.Map<Images>(request.Image);
-            image.EntityType = EntityType.City.ToString();
+            image.EntityType = EntityType.Hotel.ToString();
             image.EntityId = request.HotelId;
 
             _imageRepository.Create(image);

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,15 +36,7 @@ namespace Infrastructure.Data.Configurations
             builder.Property(h => h.FloorsNumber)
                 .IsRequired();
 
-            builder.HasOne(h => h.City)
-                .WithMany()
-                .HasForeignKey(h => h.CityId)
-                .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(h => h.Owner)
-                .WithMany()
-                .HasForeignKey(h => h.OwnerId)
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

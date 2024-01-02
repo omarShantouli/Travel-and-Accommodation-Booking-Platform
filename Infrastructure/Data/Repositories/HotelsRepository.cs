@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Exceptions;
+using Microsoft.EntityFrameworkCore;
 using static Domain.Interfaces.IRepository;
 
 namespace Infrastructure.Data.Repositories
@@ -15,7 +16,8 @@ namespace Infrastructure.Data.Repositories
 
         public Hotels GetById(Guid id)
         {
-            var hotel = _context.Hotels.FirstOrDefault(h => h.Id == id);
+            var hotel = _context.Hotels.Include(h => h.Rooms).Include(h => h.Owner).Include(h => h.City)
+                .FirstOrDefault(h => h.Id == id);
 
             if (hotel == null)
             {
@@ -27,7 +29,7 @@ namespace Infrastructure.Data.Repositories
 
         public IEnumerable<Hotels> GetAll()
         {
-            return _context.Hotels;
+            return _context.Hotels.Include(h => h.Rooms).Include(h => h.Owner).Include(h => h.City);
         }
 
         public void Create(Hotels hotel)

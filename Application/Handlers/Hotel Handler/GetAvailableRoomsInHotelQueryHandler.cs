@@ -24,11 +24,12 @@ namespace Application.Handlers
         public async Task<List<RoomDto>> Handle(GetAvailableRoomsInHotelQuery request, CancellationToken cancellationToken)
         {
            
-            var bookedRoomIds = _bookingRepository.GetAll().Where(b => b.Room.HotelId== request.HotelId 
-                                                                   && (b.CheckOutDate >= DateTime.Now)).
-                                                                   Select(b => b.RoomId);
-            var availableRooms = _roomRepository.GetAll().Where(r => r.HotelId== request.HotelId
+            var bookedRoomIds = _bookingRepository.GetAll().Where(b => b.CheckOutDate >= DateTime.Now).
+                                                                   Select(b => b.RoomId).ToList();
+            Console.WriteLine("=================>  " + bookedRoomIds);
+            var availableRooms = _roomRepository.GetAll().Where(r => r.HotelId == request.HotelId
                                                                 && !bookedRoomIds.Contains(r.Id));
+            
             var availableRoomsDto = _mapper.Map<List<RoomDto>>(availableRooms);
 
             return availableRoomsDto;

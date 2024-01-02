@@ -9,6 +9,7 @@ namespace Application.Profiles
         public ReviewsProfile()
         {
             CreateMap<ReviewDto, Reviews>();
+            CreateMap<Reviews, ReviewDto>();
         }
     }
 }

@@ -586,6 +586,8 @@ namespace Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("HotelId");
+
                     b.ToTable("Rooms");
 
                     b.HasData(
@@ -671,13 +673,13 @@ namespace Infrastructure.Data.Migrations
                     b.HasOne("Domain.Entities.Guest", "Guest")
                         .WithMany("Bookings")
                         .HasForeignKey("GuestId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Rooms", "Room")
                         .WithMany("Bookings")
                         .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Guest");
@@ -688,15 +690,15 @@ namespace Infrastructure.Data.Migrations
             modelBuilder.Entity("Domain.Entities.Hotels", b =>
                 {
                     b.HasOne("Domain.Entities.City", "City")
-                        .WithMany()
+                        .WithMany("Hotels")
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Owner", "Owner")
-                        .WithMany()
+                        .WithMany("Hotels")
                         .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("City");
@@ -704,9 +706,35 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("Owner");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Rooms", b =>
+                {
+                    b.HasOne("Domain.Entities.Hotels", "Hotel")
+                        .WithMany("Rooms")
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Hotel");
+                });
+
+            modelBuilder.Entity("Domain.Entities.City", b =>
+                {
+                    b.Navigation("Hotels");
+                });
+
             modelBuilder.Entity("Domain.Entities.Guest", b =>
                 {
                     b.Navigation("Bookings");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Hotels", b =>
+                {
+                    b.Navigation("Rooms");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Owner", b =>
+                {
+                    b.Navigation("Hotels");
                 });
 
             modelBuilder.Entity("Domain.Entities.Rooms", b =>

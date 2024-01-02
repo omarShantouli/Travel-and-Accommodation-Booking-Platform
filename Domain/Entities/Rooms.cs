@@ -11,9 +11,8 @@ namespace Domain.Entities
         public int ChildrenCapacity { get; set; }
         public string View { get; set; }
         public float Rating { get; set; }
-
-        [NotMapped]
         public List<Bookings> Bookings { get; set; }
+        public Hotels Hotel { get; set; }
 
     }
 }

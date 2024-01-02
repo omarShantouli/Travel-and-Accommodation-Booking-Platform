@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Exceptions;
+using Microsoft.EntityFrameworkCore;
 using static Domain.Interfaces.IRepository;
 
 namespace Infrastructure.Data.Repositories
@@ -15,7 +16,7 @@ namespace Infrastructure.Data.Repositories
 
         public Owner GetById(Guid id)
         {
-            var owner = _context.Owners.FirstOrDefault(o => o.Id == id);
+            var owner = _context.Owners.Include(o => o.Hotels).FirstOrDefault(o => o.Id == id);
 
             if (owner == null)
             {
@@ -27,7 +28,7 @@ namespace Infrastructure.Data.Repositories
 
         public IEnumerable<Owner> GetAll()
         {
-            return _context.Owners;
+            return _context.Owners.Include(o => o.Hotels);
         }
 
         public void Create(Owner owner)
@@ -65,7 +66,7 @@ namespace Infrastructure.Data.Repositories
 
         public void Delete(Guid id)
         {
-            var ownerToRemove = _context.Owners.FirstOrDefault(o => o.Id == id);
+            var ownerToRemove = _context.Owners.Include(o => o.Hotels).FirstOrDefault(o => o.Id == id);
 
             if (ownerToRemove == null)
             {
