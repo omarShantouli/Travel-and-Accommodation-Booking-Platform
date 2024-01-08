@@ -2,8 +2,6 @@
 using Application.Queries;
 using AutoMapper;
 using Domain.Entities;
-using Domain.Exceptions;
-using Infrastructure.Data.Repositories;
 using MediatR;
 using static Domain.Interfaces.IRepository;
 
@@ -22,7 +20,9 @@ namespace Application.Handlers
 
         public async Task<List<HotelDto>> Handle(GetHotelsInCityQuery request, CancellationToken cancellationToken)
         {
-            var hotels = _cityRepository.GetById(request.CityId).Hotels;
+            var city = await _cityRepository.GetByIdAsync(request.CityId);
+
+            var hotels = city.Hotels;
 
             var hotelDtos = _mapper.Map<List<HotelDto>>(hotels);
 

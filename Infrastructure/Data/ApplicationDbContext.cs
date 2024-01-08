@@ -11,6 +11,10 @@ namespace Infrastructure.Data
 
     public class ApplicationDbContext : DbContext
     {
+        public ApplicationDbContext(DbContextOptions options) : base(options)
+        {
+        }
+
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Bookings> Bookings { get; set; }
         public DbSet<City> Cities { get; set; }
@@ -26,8 +30,8 @@ namespace Infrastructure.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(
-                "Server=OMAR\\SQLEXPRESS;Database=TravelBookingDB;Trusted_Connection=True;TrustServerCertificate=True;");
+            //optionsBuilder.UseSqlServer(
+              //  "Server=OMAR\\SQLEXPRESS;Database=TravelBookingDB;Trusted_Connection=True;TrustServerCertificate=True;");
 
         }
         protected override void OnModelCreating(ModelBuilder builder)

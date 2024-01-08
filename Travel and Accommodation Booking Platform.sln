@@ -5,11 +5,13 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Travel and Accommodation Booking Platform", "Travel and Accommodation Booking Platform\Travel and Accommodation Booking Platform.csproj", "{3E1CBC80-EB59-4ACD-B5A1-DB68D05D7A3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{B7AF2A50-D0C0-4D26-815C-F2FFE81BD01B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{B7AF2A50-D0C0-4D26-815C-F2FFE81BD01B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{20DE413C-C314-42DC-A707-F0E5B7D976ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{20DE413C-C314-42DC-A707-F0E5B7D976ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{F925E28B-051B-46F0-AB5D-222BDE034CAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{F925E28B-051B-46F0-AB5D-222BDE034CAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Travel and Accommodation Booking Platform.Tests", "Travel and Accommodation Booking Platform.Tests\Travel and Accommodation Booking Platform.Tests.csproj", "{9748DE44-B04A-4129-B1CD-9AE9DB0F2515}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F925E28B-051B-46F0-AB5D-222BDE034CAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F925E28B-051B-46F0-AB5D-222BDE034CAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F925E28B-051B-46F0-AB5D-222BDE034CAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9748DE44-B04A-4129-B1CD-9AE9DB0F2515}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9748DE44-B04A-4129-B1CD-9AE9DB0F2515}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9748DE44-B04A-4129-B1CD-9AE9DB0F2515}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9748DE44-B04A-4129-B1CD-9AE9DB0F2515}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

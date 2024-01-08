@@ -29,7 +29,6 @@ namespace Application.Handlers
             var reviews = _reviewsRepository.GetAll();
 
             var hotelReviews = reviews.Where(r => bookingIds.Contains(r.BookingId) == true).ToList();
-            Console.WriteLine("==============>  " + hotelReviews);
 
             var reviewsDto = _mapper.Map<List<ReviewDto>>(hotelReviews);
 

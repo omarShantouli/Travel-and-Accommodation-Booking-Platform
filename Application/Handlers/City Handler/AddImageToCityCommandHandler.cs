@@ -24,7 +24,7 @@ namespace Application.Handlers
             image.EntityType = EntityType.City.ToString();
             image.EntityId = request.CityId;
 
-            _imageRepository.Create(image);
+            await _imageRepository.CreateAsync(image);
             await _imageRepository.SaveChangesAsync();
         }
     }

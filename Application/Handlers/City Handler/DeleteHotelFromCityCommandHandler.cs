@@ -20,7 +20,7 @@ namespace Application.Handlers
 
         public async Task Handle(DeleteHotelFromCityCommand request, CancellationToken cancellationToken)
         {
-            var city = _cityRepository.GetById(request.CityId);
+            var city = await _cityRepository.GetByIdAsync(request.CityId);
             if (city == null)
             {
                 throw new EntityNotFoundException($"City with ID {request.CityId} not found.");

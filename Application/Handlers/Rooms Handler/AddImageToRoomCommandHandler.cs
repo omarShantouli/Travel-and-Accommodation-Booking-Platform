@@ -30,7 +30,7 @@ namespace Application.Handlers.Rooms_Handler
             image.EntityType = EntityType.Room.ToString();
             image.EntityId = request.RoomId;
 
-            _imageRepository.Create(image);
+            await _imageRepository.CreateAsync(image);
             await _imageRepository.SaveChangesAsync();
         }
     }

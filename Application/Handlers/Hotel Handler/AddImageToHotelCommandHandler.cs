@@ -30,7 +30,7 @@ namespace Application.Handlers.Hotel_Handler
             image.EntityType = EntityType.Hotel.ToString();
             image.EntityId = request.HotelId;
 
-            _imageRepository.Create(image);
+            await _imageRepository.CreateAsync(image);
             await _imageRepository.SaveChangesAsync();
         }
     }

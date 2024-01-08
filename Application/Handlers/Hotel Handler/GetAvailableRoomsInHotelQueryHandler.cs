@@ -26,7 +26,7 @@ namespace Application.Handlers
            
             var bookedRoomIds = _bookingRepository.GetAll().Where(b => b.CheckOutDate >= DateTime.Now).
                                                                    Select(b => b.RoomId).ToList();
-            Console.WriteLine("=================>  " + bookedRoomIds);
+
             var availableRooms = _roomRepository.GetAll().Where(r => r.HotelId == request.HotelId
                                                                 && !bookedRoomIds.Contains(r.Id));
             

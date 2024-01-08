@@ -23,14 +23,14 @@ namespace Application.Handlers
 
         public async Task Handle(AddHotelInCityCommand request, CancellationToken cancellationToken)
         {
-            var city = _cityRepository.GetById(request.CityId);
+            var city = await _cityRepository.GetByIdAsync(request.CityId);
             if (city == null)
             {
                 throw new EntityNotFoundException($"City with ID {request.CityId} not found.");
             }
 
             var hotel = _mapper.Map<Hotels>(request.Hotel);
-            _hotelRepository.Create(hotel);
+            await _hotelRepository.CreateAsync(hotel);
             await _hotelRepository.SaveChangesAsync();
 
             city.Hotels.Add(hotel);

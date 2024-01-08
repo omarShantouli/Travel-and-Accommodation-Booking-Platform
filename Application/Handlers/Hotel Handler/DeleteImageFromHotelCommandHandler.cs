@@ -23,7 +23,7 @@ namespace Application.Handlers.Hotel_Handler
 
         public async Task Handle(DeleteImageFromHotelCommand request, CancellationToken cancellationToken)
         {
-            var imageToRemove = _imageRepository.GetById(request.ImageId);
+            var imageToRemove = await _imageRepository.GetByIdAsync(request.ImageId);
             if (imageToRemove == null)
             {
                 throw new EntityNotFoundException($"Image with ID {request.ImageId} is not found!");
@@ -31,7 +31,7 @@ namespace Application.Handlers.Hotel_Handler
 
             if(imageToRemove.EntityId == request.HotelId)
             {
-                _imageRepository.Delete(request.ImageId);
+                await _imageRepository.DeleteAsync(request.ImageId);
 
                 await _imageRepository.SaveChangesAsync();
             }
