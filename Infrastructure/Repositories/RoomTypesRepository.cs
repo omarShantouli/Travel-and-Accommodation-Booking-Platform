@@ -39,7 +39,7 @@ namespace Infrastructure.Repositories
                 throw new ArgumentNullException(nameof(roomType));
             }
 
-            await _context.RoomTypes.AddAsync(roomType);
+            _context.RoomTypes.Add(roomType);
             await _context.SaveChangesAsync();
             return roomType;
         }

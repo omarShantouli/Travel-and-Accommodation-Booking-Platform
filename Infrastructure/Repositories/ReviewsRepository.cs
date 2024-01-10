@@ -39,7 +39,7 @@ namespace Infrastructure.Repositories
                 throw new ArgumentNullException(nameof(review));
             }
 
-            await _context.Reviews.AddAsync(review);
+            _context.Reviews.Add(review);
             await _context.SaveChangesAsync();
             return review;
         }

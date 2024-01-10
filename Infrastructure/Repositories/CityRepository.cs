@@ -39,7 +39,7 @@ namespace Infrastructure.Repositories
                 throw new ArgumentNullException(nameof(city));
             }
 
-            await _context.Cities.AddAsync(city);
+            _context.Cities.Add(city);
             await _context.SaveChangesAsync();
             return city;
         }

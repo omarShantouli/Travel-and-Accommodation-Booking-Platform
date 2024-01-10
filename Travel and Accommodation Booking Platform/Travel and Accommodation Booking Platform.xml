@@ -1,0 +1,250 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Travel and Accommodation Booking Platform</name>
+    </assembly>
+    <members>
+        <member name="T:Travel_and_Accommodation_Booking_Platform.Controllers.AuthenticationController">
+            <summary>
+            Controller for handling authentication-related actions.
+            </summary>
+        </member>
+        <member name="T:Travel_and_Accommodation_Booking_Platform.Controllers.AuthenticationController.AuthenticationRequestBody">
+            <summary>
+            Represents the request body structure for authentication.
+            </summary>
+        </member>
+        <member name="P:Travel_and_Accommodation_Booking_Platform.Controllers.AuthenticationController.AuthenticationRequestBody.Email">
+            <summary>
+            Gets or sets the user's email.
+            </summary>
+        </member>
+        <member name="P:Travel_and_Accommodation_Booking_Platform.Controllers.AuthenticationController.AuthenticationRequestBody.Password">
+            <summary>
+            Gets or sets the user's password.
+            </summary>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.AuthenticationController.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Domain.Interfaces.IRepository.IRepository{Domain.Entities.AppUser},Microsoft.Extensions.Logging.ILogger{Travel_and_Accommodation_Booking_Platform.Controllers.AuthenticationController})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Travel_and_Accommodation_Booking_Platform.Controllers.AuthenticationController"/> class.
+            </summary>
+            <param name="configuration">The configuration.</param>
+            <param name="appUserRepository">The repository for <see cref="T:Domain.Entities.AppUser"/>.</param>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.AuthenticationController.Authenticate(Travel_and_Accommodation_Booking_Platform.Controllers.AuthenticationController.AuthenticationRequestBody)">
+            <summary>
+            Authenticates a user based on the provided credentials.
+            </summary>
+            <param name="authenticationRequestBody">The request body containing user credentials.</param>
+            <returns>An action result containing the authentication token or an error response.</returns>
+        </member>
+        <member name="T:Travel_and_Accommodation_Booking_Platform.Controllers.CityController">
+            <summary>
+            Controller for managing city-related operations.
+            </summary>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.CityController.#ctor(MediatR.IMediator,Domain.Interfaces.IRepository.IRepository{Domain.Entities.City},AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Travel_and_Accommodation_Booking_Platform.Controllers.CityController"/> class.
+            </summary>
+            <param name="mediator">The mediator for handling queries and commands.</param>
+            <param name="cityRepository">The repository for city entities.</param>
+            <param name="mapper">The mapper for mapping between DTOs and entities.</param>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.CityController.GetAllCities">
+            <summary>
+            Retrieves a list of all cities.
+            </summary>
+            <returns>
+            A list of city data transfer objects (DTOs).
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.CityController.CreateCity(Application.DTOs.CityDto)">
+            <summary>
+            Creates a new city.
+            </summary>
+            <param name="city">The city data to be created.</param>
+            <returns>
+            No content with a 204 No Content status upon successful creation.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.CityController.GetCityById(System.Guid)">
+            <summary>
+            Retrieves a specific city by its unique identifier.
+            </summary>
+            <param name="id">The unique identifier of the city.</param>
+            <returns>
+            A city data transfer object (DTO).
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.CityController.UpdateCity(System.Guid,Application.DTOs.CityDto)">
+            <summary>
+            Updates a city with the specified ID.
+            </summary>
+            <param name="id">The unique identifier of the city.</param>
+            <param name="updatedCity">The updated city information.</param>
+            <returns>
+            No content with a 204 No Content status upon successful update.
+            Bad request with a 400 Bad Request status if the updated city data is null or invalid.
+            Not found with a 404 Not Found status if the city with the specified ID is not found.
+            Internal server error with a 500 status if an unexpected error occurs during the update.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.CityController.PatchCity(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{Application.DTOs.CityDto})">
+            <summary>
+            Partially updates a city using JSON Patch.
+            </summary>
+            <param name="id">The unique identifier of the city.</param>
+            <param name="patchDocument">The JSON Patch document containing partial updates.</param>
+            <returns>
+            No content with a 204 No Content status upon successful update.
+            Bad request with a 400 Bad Request status if the patch document is null or invalid.
+            Not found with a 404 Not Found status if the city with the specified ID is not found.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.CityController.DeleteCity(System.Guid)">
+            <summary>
+            Deletes a city with the specified ID.
+            </summary>
+            <param name="id">The unique identifier of the city to delete.</param>
+            <returns>
+            No content with a 204 No Content status upon successful deletion.
+            Not found with a 404 Not Found status if the city with the specified ID is not found.
+            Internal server error with a 500 status if an unexpected error occurs during the deletion.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.CityController.GetHotelsByCityId(System.Guid)">
+            <summary>
+            Retrieves a list of hotels based on the specified city ID.
+            </summary>
+            <param name="id">The unique identifier of the city.</param>
+            <returns>
+            <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/> with HTTP status code:
+            - 200 (OK) if hotels are found.
+            - 404 (Not Found) if no hotels are found for the given city ID.
+            - 500 (Internal Server Error) in case of unexpected errors.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.CityController.AddHotelInCity(System.Guid,Application.DTOs.HotelDto)">
+            <summary>
+            Adds a new hotel to a specific city.
+            </summary>
+            <param name="id">The unique identifier of the city.</param>
+            <param name="hotel">The hotel data to be added.</param>
+            <returns>
+            No content with a 204 No Content status upon successful addition.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.CityController.DeleteHotelFromCity(System.Guid,System.Guid)">
+            <summary>
+            Deletes a hotel from a specific city.
+            </summary>
+            <param name="cityId">The unique identifier of the city.</param>
+            <param name="hotelId">The unique identifier of the hotel to be deleted.</param>
+            <returns>
+            No content with a 204 No Content status upon successful deletion.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.CityController.GetImagesByCityId(System.Guid)">
+            <summary>
+            Retrieves a list of images associated with a specific city.
+            </summary>
+            <param name="id">The unique identifier of the city.</param>
+            <returns>
+            A collection of image data transfer objects (DTOs).
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.CityController.AddImageToCity(System.Guid,Application.DTOs.ImageDto)">
+            <summary>
+            Adds a new image to a specific city.
+            </summary>
+            <param name="id">The unique identifier of the city.</param>
+            <param name="image">The image data to be added.</param>
+            <returns>
+            No content with a 204 No Content status upon successful addition.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.CityController.DeleteImageFromCity(System.Guid,System.Guid)">
+            <summary>
+            Deletes an image from a specific city.
+            </summary>
+            <param name="cityId">The unique identifier of the city.</param>
+            <param name="imageId">The unique identifier of the image to be deleted.</param>
+            <returns>
+            No content with a 204 No Content status upon successful deletion.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.TestingController.PatchCity(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{Application.DTOs.CityDto})">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <param name="patchDocument"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Travel_and_Accommodation_Booking_Platform.Models.ErrorModel">
+            <summary>
+            Represents an error model with information about a specific field and associated error message.
+            </summary>
+        </member>
+        <member name="P:Travel_and_Accommodation_Booking_Platform.Models.ErrorModel.FieldName">
+            <summary>
+            Gets or sets the name of the field associated with the error.
+            </summary>
+        </member>
+        <member name="P:Travel_and_Accommodation_Booking_Platform.Models.ErrorModel.Message">
+            <summary>
+            Gets or sets the error message for the field.
+            </summary>
+        </member>
+        <member name="T:Travel_and_Accommodation_Booking_Platform.Token.JwtTokenGenerator">
+            <summary>
+            Generates and validates JWT tokens for user authentication.
+            </summary>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Token.JwtTokenGenerator.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Domain.Interfaces.IRepository.IRepository{Domain.Entities.AppUser})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Travel_and_Accommodation_Booking_Platform.Token.JwtTokenGenerator"/> class.
+            </summary>
+            <param name="configuration">The configuration for the token generator.</param>
+            <param name="appUserRepository">The repository for <see cref="T:Domain.Entities.AppUser"/>.</param>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Token.JwtTokenGenerator.GenerateToken(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Generates a JWT token based on user credentials.
+            </summary>
+            <param name="email">The user's email.</param>
+            <param name="password">The user's password.</param>
+            <param name="secretKey">The secret key for token signing.</param>
+            <param name="issuer">The issuer of the token.</param>
+            <param name="audience">The audience of the token.</param>
+            <param name="role">The role of the user.</param>
+            <returns>The generated JWT token.</returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Token.JwtTokenGenerator.ValidateUserCredentials(System.String,System.String)">
+            <summary>
+            Validates user credentials.
+            </summary>
+            <param name="email">The user's email.</param>
+            <param name="password">The user's password.</param>
+            <returns>The user if credentials are valid; otherwise, null.</returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Token.JwtTokenGenerator.ValidateToken(System.String)">
+            <summary>
+            Validates the provided JWT token.
+            </summary>
+            <param name="token">The JWT token to validate.</param>
+            <returns>True if the token is valid; otherwise, false.</returns>
+        </member>
+        <member name="T:Travel_and_Accommodation_Booking_Platform.Validators.AuthenticationRequestBodyValidator">
+            <summary>
+            Validator for <see cref="T:Travel_and_Accommodation_Booking_Platform.Controllers.AuthenticationController.AuthenticationRequestBody"/>.
+            </summary>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Validators.AuthenticationRequestBodyValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Travel_and_Accommodation_Booking_Platform.Validators.AuthenticationRequestBodyValidator"/> class.
+            </summary>
+        </member>
+    </members>
+</doc>

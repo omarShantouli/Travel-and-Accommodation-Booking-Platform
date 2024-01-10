@@ -14,7 +14,7 @@ namespace Infrastructure.Data.Configurations
                 .HasMaxLength(50).IsRequired();
 
             builder.Property(t => t.PasswordHash)
-                .HasMaxLength(20).IsRequired();
+                .HasMaxLength(100).IsRequired();
 
             builder.Property(t => t.Role)
                 .HasMaxLength(20).IsRequired();

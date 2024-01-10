@@ -30,8 +30,8 @@ namespace Infrastructure.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(
-              //  "Server=OMAR\\SQLEXPRESS;Database=TravelBookingDB;Trusted_Connection=True;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer(
+                "Server=OMAR\\SQLEXPRESS;Database=TravelBookingDB;Trusted_Connection=True;TrustServerCertificate=True;");
 
         }
         protected override void OnModelCreating(ModelBuilder builder)
@@ -51,6 +51,7 @@ namespace Infrastructure.Data
             builder.Entity<Reviews>().HasData(ReviewsSeeding.SeedData());
             builder.Entity<Rooms>().HasData(RoomsSeeding.SeedData());
             builder.Entity<RoomTypes>().HasData(RoomTypesSeeding.SeedData());
+            builder.Entity<AppUser>().HasData(AppUserSeeding.SeedData());
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Application
             services.AddScoped<IRepository<RoomTypes>, RoomTypesRepository>();
             services.AddScoped<IRepository<Guest>, GuestRepository>();
             services.AddScoped<IRepository<Reviews>, ReviewsRepository>();
+            services.AddScoped<IRepository<AppUser>, AppUserRepository>();
 
             return services;
         }

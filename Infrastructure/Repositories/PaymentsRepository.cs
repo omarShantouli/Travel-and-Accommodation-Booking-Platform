@@ -39,7 +39,7 @@ namespace Infrastructure.Repositories
                 throw new ArgumentNullException(nameof(payment));
             }
 
-            await _context.Payments.AddAsync(payment);
+            _context.Payments.Add(payment);
             await _context.SaveChangesAsync();
             return payment;
         }

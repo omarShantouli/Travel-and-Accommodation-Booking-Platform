@@ -44,6 +44,7 @@ public class CityRepositoryTests
         // Assert 
         Assert.Equal(expectedCities.Count, fetchedCities.Count());
     }
+  
 
     [Theory]
     [MemberData(nameof(CityRepositoryTestData.CityRepositoryValidTestData),

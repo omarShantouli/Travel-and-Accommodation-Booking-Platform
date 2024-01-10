@@ -35,8 +35,8 @@ namespace Infrastructure.Data.Migrations
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Role")
                         .IsRequired()
@@ -46,6 +46,29 @@ namespace Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("0028afe9-14d5-4bfb-a0ad-4dc484d2d470"),
+                            Email = "admin@example.com",
+                            PasswordHash = "$2a$12$6FjKqlXYrjM/oHxRpmHGSuuSEoPqPTuLTKIVahnpMD3Yx4NWyT5/6",
+                            Role = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("262ea98f-6f2e-4ddb-ae78-f65473540d2b"),
+                            Email = "john.doe@example.com",
+                            PasswordHash = "$2a$12$6FjKqlXYrjM/oHxRpmHGSuLJubmSkPYEUye2KxdpvEr5dKDSM2Op6",
+                            Role = "User"
+                        },
+                        new
+                        {
+                            Id = new Guid("1b4e08ba-4f3d-4dd2-8cf7-0ce19b267776"),
+                            Email = "jane.smith@example.com",
+                            PasswordHash = "$2a$12$6FjKqlXYrjM/oHxRpmHGSu1W14LN06bNNOoPKpLumG0Grz3IkJEui",
+                            Role = "User"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Bookings", b =>

@@ -39,7 +39,7 @@ namespace Infrastructure.Repositories
                 throw new ArgumentNullException(nameof(owner));
             }
 
-            await _context.Owners.AddAsync(owner);
+            _context.Owners.Add(owner);
             await _context.SaveChangesAsync();
             return owner;
         }

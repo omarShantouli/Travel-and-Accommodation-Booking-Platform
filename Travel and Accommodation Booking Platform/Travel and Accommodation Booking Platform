@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Travel and Accommodation Booking Platform</name>
+    </assembly>
+    <members>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.CityController.GetHotelsByCityId(System.Guid)">
+            <summary>
+            Retrieves a list of hotels based on the specified city ID.
+            </summary>
+            <param name="id">The unique identifier of the city.</param>
+            <returns>
+            <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/> with HTTP status code:
+            - 200 (OK) if hotels are found.
+            - 404 (Not Found) if no hotels are found for the given city ID.
+            - 500 (Internal Server Error) in case of unexpected errors.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.TestingController.PatchCity(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{Application.DTOs.CityDto})">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <param name="patchDocument"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

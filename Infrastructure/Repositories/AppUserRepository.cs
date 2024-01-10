@@ -39,7 +39,7 @@ namespace Infrastructure.Repositories
                 throw new ArgumentNullException(nameof(user));
             }
 
-            await _context.AppUsers.AddAsync(user);
+             _context.AppUsers.Add(user);
             await _context.SaveChangesAsync();
             return user;
         }

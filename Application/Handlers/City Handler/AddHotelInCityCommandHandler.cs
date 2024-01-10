@@ -30,6 +30,7 @@ namespace Application.Handlers
             }
 
             var hotel = _mapper.Map<Hotels>(request.Hotel);
+
             await _hotelRepository.CreateAsync(hotel);
             await _hotelRepository.SaveChangesAsync();
 

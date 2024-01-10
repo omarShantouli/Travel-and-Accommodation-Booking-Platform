@@ -39,7 +39,7 @@ namespace Infrastructure.Repositories
                 throw new ArgumentNullException(nameof(booking));
             }
 
-            await _context.Bookings.AddAsync(booking);
+            _context.Bookings.Add(booking);
             await _context.SaveChangesAsync();
             return booking;
         }

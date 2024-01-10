@@ -39,7 +39,7 @@ namespace Infrastructure.Repositories
                 throw new ArgumentNullException(nameof(image));
             }
 
-            await _context.Images.AddAsync(image);
+            _context.Images.Add(image);
             await _context.SaveChangesAsync();
             return image;
         }

@@ -4,8 +4,15 @@ using Application.Commands.Rooms_Commands;
 using Application.DTOs;
 using Application.Queries;
 using Application.Queries.Rooms_Queries;
+using AutoMapper;
+using Domain.Entities;
+using Domain.Exceptions;
+using Infrastructure.Repositories;
 using MediatR;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using static Domain.Interfaces.IRepository;
 
 namespace Travel_and_Accommodation_Booking_Platform.Controllers
 {
@@ -14,13 +21,16 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
     public class TestingController : Controller
     {
         private readonly IMediator _mediator;
-
-        public TestingController(IMediator mediator)
+        private readonly IRepository<City> _cityrepository;
+        private readonly IMapper _mapper;
+        public TestingController(IMediator mediator, IRepository<City> cityrepository, IMapper mapper)
         {
             _mediator = mediator;
+            _cityrepository = cityrepository;
+            _mapper = mapper;
         }
 
-        [HttpGet("GetHotelsByCityId/{id}")]
+        [HttpGet("GetHotelsByCityId/{id}")] // done
         public async Task<List<HotelDto>> GetHotelsByCityId(Guid id)
         {
             var query = new GetHotelsInCityQuery { CityId = id };
@@ -29,7 +39,7 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
             return result;
         }
 
-        [HttpGet("GetImagesByCityId/{id}")]
+        [HttpGet("GetImagesByCityId/{id}")] // done
         public async Task<List<ImageDto>> GetImagesByCityId(Guid id)
         {
             var query = new GetImagesOfCityQuery { CityId = id };
@@ -44,6 +54,24 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
             var result = await _mediator.Send(query);
             return result;
         }
+
+        [HttpGet("GetAllCities")] // done
+        public List<CityDto> GetAllCities()
+        {
+            Console.WriteLine("omar hantouli");
+            var cities = _cityrepository.GetAll();
+            var result = _mapper.Map<List<CityDto>>(cities);
+            return result;
+        }
+
+        [HttpGet("GetCitById/{Id}")] // done
+        public async Task<CityDto> GetCitById(Guid Id)
+        {
+            var city = await _cityrepository.GetByIdAsync(Id);
+            var result = _mapper.Map<CityDto>(city);
+            return result;
+        }
+
         [HttpGet("GetAvailableRoomsByHotelId/{id}")]
         public async Task<List<RoomDto>> GetAvailableRoomsByHotelId(Guid id)
         {
@@ -74,9 +102,18 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
             return result;
         }
 
+        [HttpPost("CreateCity")]
+        public async Task AddHotelInCity([FromBody] CityDto city)
+        {
+            var citToAdd = _mapper.Map<City>(city);
+           await _cityrepository.CreateAsync(citToAdd);
+
+        }
+
         [HttpPost("AddImageToHotel/{id}")]
         public async Task AddHotelImage(Guid id, [FromBody] ImageDto image)
         {
+            Console.WriteLine("===========> ", image.URL);
             var query = new AddImageToHotelCommand { HotelId = id , Image = image};
             await _mediator.Send(query);
 
@@ -153,5 +190,58 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
             await _mediator.Send(query);
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="patchDocument"></param>
+        /// <returns></returns>
+        
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchCity(Guid id,  JsonPatchDocument<CityDto> patchDocument)
+        {
+            if (patchDocument == null)
+            {
+                return BadRequest();
+            }
+
+            var city = await _cityrepository.GetByIdAsync(id);
+
+            if (city == null)
+            {
+                return NotFound();
+            }
+
+            var cityDto = new CityDto
+            {
+                Id = city.Id,
+                Name = city.Name,
+                CountryName = city.CountryName,
+                PostOffice = city.PostOffice,
+                CountryCode = city.CountryCode
+            };
+
+            // Apply the patch document to the DTO
+            patchDocument.ApplyTo(cityDto, ModelState);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Update the entity with the changes
+            city.Name = cityDto.Name;
+            city.CountryName = cityDto.CountryName;
+            city.PostOffice = cityDto.PostOffice;
+            city.CountryCode = cityDto.CountryCode;
+
+            // Save changes
+            await _cityrepository.SaveChangesAsync();
+            
+
+            return NoContent();
+        }
+
+        ///
     }
 }
