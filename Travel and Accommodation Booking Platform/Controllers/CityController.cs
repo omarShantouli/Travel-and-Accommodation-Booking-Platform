@@ -1,14 +1,11 @@
 ﻿using Application.Commands;
+using Application.Commands.City_Commands;
 using Application.DTOs;
 using Application.Queries;
-using AutoMapper;
-using Domain.Entities;
-using Infrastructure.Repositories;
+using Application.Queries.City_Queries;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using static Domain.Interfaces.IRepository;
 
 namespace Travel_and_Accommodation_Booking_Platform.Controllers
 {
@@ -21,20 +18,17 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
     public class CityController : Controller
     {
         private readonly IMediator _mediator;
-        private readonly IRepository<City> _cityRepository;
-        private readonly IMapper _mapper;
+        private readonly ILogger<CityController> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CityController"/> class.
         /// </summary>
         /// <param name="mediator">The mediator for handling queries and commands.</param>
-        /// <param name="cityRepository">The repository for city entities.</param>
-        /// <param name="mapper">The mapper for mapping between DTOs and entities.</param>
-        public CityController(IMediator mediator, IRepository<City> cityRepository, IMapper mapper)
+        /// <param name="logger">The logger for capturing and logging information related to CityController.</param>
+        public CityController(IMediator mediator, ILogger<CityController> logger)
         {
             _mediator = mediator;
-            _cityRepository = cityRepository;
-            _mapper = mapper;
+            _logger = logger;
         }
 
         /// <summary>
@@ -48,16 +42,25 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
         {
             try
             {
-                var cities = _cityRepository.GetAll();
-                var result = _mapper.Map<List<CityDto>>(cities);
+                var query = new GetAllCitiesQuery();
+                var cities = _mediator.Send(query);
 
-                // If cities are found, return them with a 200 OK status.
-                return Ok(result);
+                if (cities == null)
+                {
+                    // Status Code: 404 - Not Found
+                    return NotFound("No cities found!");
+                }
+
+                // Status Code: 200 - OK
+                return Ok(cities);
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed.
-                return StatusCode(500, $"An error occurred: {ex.Message}");
+                // Log the exception or handle it based on your application's requirements
+                _logger.LogInformation($"Error in GetAllCitiesQuery: {ex.Message}");
+
+                // Status Code: 500 - Internal Server Error
+                return StatusCode(500, "An error occurred while processing the request.");
             }
         }
 
@@ -73,8 +76,8 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
         {
             try
             {
-                var cityToAdd = _mapper.Map<City>(city);
-                await _cityRepository.CreateAsync(cityToAdd);
+                var command = new CreateCityCommand { City = city };
+                await _mediator.Send(command); 
 
                 // Return 204 No Content upon successful creation.
                 return NoContent();
@@ -98,22 +101,24 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
         {
             try
             {
-                var city = await _cityRepository.GetByIdAsync(id);
+                var query = new GetCityByIdQuery { CityId = id };
+                var city = await _mediator.Send(query);
 
-                // If the city is found, return it with a 200 OK status.
-                if (city != null)
+                if (city == null)
                 {
-                    var result = _mapper.Map<CityDto>(city);
-                    return Ok(result);
+                    // Status Code: 404 - Not Found
+                    return NotFound("No city found for the given id.");
                 }
 
-                // If the city is not found, return a 404 Not Found status.
-                return NotFound($"City with ID {id} not found.");
+                // Status Code: 200 - OK
+                return Ok(city);
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed.
-                return StatusCode(500, $"An error occurred: {ex.Message}");
+                _logger.LogInformation($"Error in GetCityByIdQuery: {ex.Message}");
+
+                // Status Code: 500 - Internal Server Error
+                return StatusCode(500, "An error occurred while processing the request.");
             }
         }
 
@@ -138,16 +143,8 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
                     return BadRequest("The updated city data is null.");
                 }
 
-                var existingCity = await _cityRepository.GetByIdAsync(id);
-
-                if (existingCity == null)
-                {
-                    return NotFound($"City with ID {id} not found.");
-                }
-
-                _mapper.Map(updatedCity, existingCity);
-
-                await _cityRepository.SaveChangesAsync();
+                var command = new UpdateCityCommand{CityId=  id, UpdatedCity = updatedCity};
+                await _mediator.Send(command);
 
                 return NoContent();
             }
@@ -177,39 +174,8 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
                     return BadRequest("The patch document is null.");
                 }
 
-                var city = await _cityRepository.GetByIdAsync(id);
-
-                if (city == null)
-                {
-                    return NotFound($"City with ID {id} not found.");
-                }
-
-                var cityDto = new CityDto
-                {
-                    Id = city.Id,
-                    Name = city.Name,
-                    CountryName = city.CountryName,
-                    PostOffice = city.PostOffice,
-                    CountryCode = city.CountryCode
-                };
-
-                // Apply the patch document to the DTO
-                patchDocument.ApplyTo(cityDto, ModelState);
-
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
-                // Update the entity with the changes
-                city.Name = cityDto.Name;
-                city.CountryName = cityDto.CountryName;
-                city.PostOffice = cityDto.PostOffice;
-                city.CountryCode = cityDto.CountryCode;
-
-                // Save changes
-                await _cityRepository.SaveChangesAsync();
-
+                var command = new PatchCityCommand { CityId = id, patchDocument = patchDocument};
+                await _mediator.Send(command);
                 // Return 204 No Content upon successful update.
                 return NoContent();
             }
@@ -234,16 +200,8 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
         {
             try
             {
-                var existingCity = await _cityRepository.GetByIdAsync(id);
-
-                if (existingCity == null)
-                {
-                    return NotFound($"City with ID {id} not found.");
-                }
-
-                await _cityRepository.DeleteAsync(existingCity.Id);
-
-                await _cityRepository.SaveChangesAsync();
+                var command = new DeleteCityCommand { CityId= id };
+                await _mediator.Send(command);
 
                 return NoContent();
             }

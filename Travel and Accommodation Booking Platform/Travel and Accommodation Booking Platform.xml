@@ -43,7 +43,7 @@
             Controller for managing city-related operations.
             </summary>
         </member>
-        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.CityController.#ctor(MediatR.IMediator,Domain.Interfaces.IRepository.IRepository{Domain.Entities.City},AutoMapper.IMapper)">
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.CityController.#ctor(MediatR.IMediator,Domain.Interfaces.IRepository.IRepository{Domain.Entities.City},AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{Travel_and_Accommodation_Booking_Platform.Controllers.CityController})">
             <summary>
             Initializes a new instance of the <see cref="T:Travel_and_Accommodation_Booking_Platform.Controllers.CityController"/> class.
             </summary>
