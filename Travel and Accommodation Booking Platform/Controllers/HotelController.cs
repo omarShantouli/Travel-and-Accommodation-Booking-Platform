@@ -32,6 +32,40 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
         }
 
         /// <summary>
+        /// Retrieves a list of all hotels.
+        /// </summary>
+        /// <returns>
+        /// A list of hotel data transfer objects (DTOs).
+        /// </returns>
+        [HttpGet("GetAllHotels")]
+        public IActionResult GetAllHotels()
+        {
+            try
+            {
+                var query = new GetAllHotelsQuery();
+                var hotels = _mediator.Send(query);
+
+                if (hotels == null)
+                {
+                    // Status Code: 404 - Not Found
+                    return NotFound("No hotels found!");
+                }
+
+                // Status Code: 200 - OK
+                return Ok(hotels);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it based on your application's requirements
+                _logger.LogInformation($"Error in GetAllHotelsQuery: {ex.Message}");
+
+                // Status Code: 500 - Internal Server Error
+                return StatusCode(500, "An error occurred while processing the request.");
+            }
+        }
+
+
+        /// <summary>
         /// Retrieves a specific hotel by its unique identifier.
         /// </summary>
         /// <param name="id">The unique identifier of the hotel.</param>
@@ -61,6 +95,31 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
 
                 // Status Code: 500 - Internal Server Error
                 return StatusCode(500, "An error occurred while processing the request.");
+            }
+        }
+
+        /// <summary>
+        /// Creates a new hotel.
+        /// </summary>
+        /// <param name="hotel">The hotel data to be created.</param>
+        /// <returns>
+        /// No content with a 204 No Content status upon successful creation.
+        /// </returns>
+        [HttpPost("CreateHotel")]
+        public async Task<IActionResult> CreateHotel([FromBody] HotelDto hotel)
+        {
+            try
+            {
+                var command = new CreateHotelCommand { Hotel = hotel };
+                await _mediator.Send(command);
+
+                // Return 204 No Content upon successful creation.
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception as needed.
+                return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
 

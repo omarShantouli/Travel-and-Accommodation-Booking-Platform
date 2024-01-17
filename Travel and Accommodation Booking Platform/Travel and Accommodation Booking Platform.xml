@@ -186,6 +186,14 @@
             <param name="mediator">The mediator for handling queries and commands.</param>
             <param name="logger">The logger for capturing and logging information related to HotelController.</param>
         </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController.GetAllHotels">
+            <summary>
+            Retrieves a list of all hotels.
+            </summary>
+            <returns>
+            A list of hotel data transfer objects (DTOs).
+            </returns>
+        </member>
         <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController.GetHotelById(System.Guid)">
             <summary>
             Retrieves a specific hotel by its unique identifier.
@@ -193,6 +201,15 @@
             <param name="id">The unique identifier of the hotel.</param>
             <returns>
             A hotel data transfer object (DTO).
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController.CreateHotel(Application.DTOs.HotelDto)">
+            <summary>
+            Creates a new hotel.
+            </summary>
+            <param name="hotel">The hotel data to be created.</param>
+            <returns>
+            No content with a 204 No Content status upon successful creation.
             </returns>
         </member>
         <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController.GetAvailableRoomsInHotel(System.Guid)">
