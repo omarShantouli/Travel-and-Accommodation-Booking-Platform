@@ -5,6 +5,7 @@ using Application.Queries;
 using Application.Queries.Hotels_Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Travel_and_Accommodation_Booking_Platform.Controllers
@@ -119,6 +120,96 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
             catch (Exception ex)
             {
                 // Log or handle the exception as needed.
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Deletes a hotel with the specified ID.
+        /// </summary>
+        /// <param name="id">The unique identifier of the hotel to delete.</param>
+        /// <returns>
+        /// No content with a 204 No Content status upon successful deletion.
+        /// Not found with a 404 Not Found status if the hotel with the specified ID is not found.
+        /// Internal server error with a 500 status if an unexpected error occurs during the deletion.
+        /// </returns>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteHotel(Guid id)
+        {
+            try
+            {
+                var command = new DeleteHotelCommand { HotelId = id };
+                await _mediator.Send(command);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+
+
+        /// <summary>
+        /// Partially updates a hotel using JSON Patch.
+        /// </summary>
+        /// <param name="id">The unique identifier of the hotel.</param>
+        /// <param name="patchDocument">The JSON Patch document containing partial updates.</param>
+        /// <returns>
+        /// No content with a 204 No Content status upon successful update.
+        /// Bad request with a 400 Bad Request status if the patch document is null or invalid.
+        /// Not found with a 404 Not Found status if the hotel with the specified ID is not found.
+        /// </returns>
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchHotel(Guid id, JsonPatchDocument<HotelDto> patchDocument)
+        {
+            try
+            {
+                if (patchDocument == null)
+                {
+                    return BadRequest("The patch document is null.");
+                }
+
+                var command = new PatchHotelCommand { HotelId = id, patchDocument = patchDocument };
+                await _mediator.Send(command);
+                // Return 204 No Content upon successful update.
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception as needed.
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Updates a hotel with the specified ID.
+        /// </summary>
+        /// <param name="id">The unique identifier of the hotel.</param>
+        /// <param name="updatedHotel">The updated hotel information.</param>
+        /// <returns>
+        /// No content with a 204 No Content status upon successful update.
+        /// Bad request with a 400 Bad Request status if the updated hotel data is null or invalid.
+        /// Not found with a 404 Not Found status if the hotel with the specified ID is not found.
+        /// Internal server error with a 500 status if an unexpected error occurs during the update.
+        /// </returns>
+        [HttpPut("UpdateHotel/{id}")]
+        public async Task<IActionResult> UpdateHotel(Guid id, [FromBody] HotelDto updatedHotel)
+        {
+            try
+            {
+                if (updatedHotel == null)
+                {
+                    return BadRequest("The updated hotel data is null.");
+                }
+
+                var command = new UpdateHotelCommand { HotelId = id, UpdatedHotel = updatedHotel };
+                await _mediator.Send(command);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }

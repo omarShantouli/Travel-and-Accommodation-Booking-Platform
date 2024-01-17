@@ -212,6 +212,42 @@
             No content with a 204 No Content status upon successful creation.
             </returns>
         </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController.DeleteHotel(System.Guid)">
+            <summary>
+            Deletes a hotel with the specified ID.
+            </summary>
+            <param name="id">The unique identifier of the hotel to delete.</param>
+            <returns>
+            No content with a 204 No Content status upon successful deletion.
+            Not found with a 404 Not Found status if the hotel with the specified ID is not found.
+            Internal server error with a 500 status if an unexpected error occurs during the deletion.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController.PatchHotel(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{Application.DTOs.HotelDto})">
+            <summary>
+            Partially updates a hotel using JSON Patch.
+            </summary>
+            <param name="id">The unique identifier of the hotel.</param>
+            <param name="patchDocument">The JSON Patch document containing partial updates.</param>
+            <returns>
+            No content with a 204 No Content status upon successful update.
+            Bad request with a 400 Bad Request status if the patch document is null or invalid.
+            Not found with a 404 Not Found status if the hotel with the specified ID is not found.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController.UpdateHotel(System.Guid,Application.DTOs.HotelDto)">
+            <summary>
+            Updates a hotel with the specified ID.
+            </summary>
+            <param name="id">The unique identifier of the hotel.</param>
+            <param name="updatedHotel">The updated hotel information.</param>
+            <returns>
+            No content with a 204 No Content status upon successful update.
+            Bad request with a 400 Bad Request status if the updated hotel data is null or invalid.
+            Not found with a 404 Not Found status if the hotel with the specified ID is not found.
+            Internal server error with a 500 status if an unexpected error occurs during the update.
+            </returns>
+        </member>
         <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController.GetAvailableRoomsInHotel(System.Guid)">
             <summary>
             Retrieves a list of available rooms in a specific hotel.
