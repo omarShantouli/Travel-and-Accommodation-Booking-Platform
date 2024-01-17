@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Travel_and_Accommodation_Booking_Platform.Models;
 using Travel_and_Accommodation_Booking_Platform.Token;
@@ -41,12 +40,13 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
         /// </summary>
         /// <param name="configuration">The configuration.</param>
         /// <param name="appUserRepository">The repository for <see cref="AppUser"/>.</param>
+        /// <param name="logger">The logger.</param>
         public AuthenticationController(IConfiguration configuration, IRepository<AppUser> appUserRepository
             , ILogger<AuthenticationController> logger)
         {
-            _configuration = configuration;
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _tokenGenerator = new JwtTokenGenerator(configuration, appUserRepository);
-            _logger = logger;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
@@ -57,36 +57,47 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
         [HttpPost("authenticate")]
         public ActionResult<string> Authenticate(AuthenticationRequestBody authenticationRequestBody)
         {
-            var validator = new AuthenticationRequestBodyValidator();
-            var results = validator.Validate(authenticationRequestBody);
-
-            if (!results.IsValid)
+            try
             {
-                List<ErrorModel> errors = new List<ErrorModel>();
-                foreach (var failure in results.Errors)
+                var validator = new AuthenticationRequestBodyValidator();
+                var results = validator.Validate(authenticationRequestBody);
+
+                if (!results.IsValid)
                 {
-                    errors.Add(new ErrorModel()
+                    List<ErrorModel> errors = new List<ErrorModel>();
+                    foreach (var failure in results.Errors)
                     {
-                        FieldName = failure.PropertyName,
-                        Message = failure.ErrorMessage
-                    });
-                    Console.WriteLine(failure.ErrorMessage);
+                        errors.Add(new ErrorModel()
+                        {
+                            FieldName = failure.PropertyName,
+                            Message = failure.ErrorMessage
+                        });
+                        _logger.LogError($"Validation Error: Field '{failure.PropertyName}', Message: {failure.ErrorMessage}");
+                    }
+                    return BadRequest(errors);
                 }
-                return BadRequest(errors);
+
+                var user = _tokenGenerator.ValidateUserCredentials(authenticationRequestBody.Email, authenticationRequestBody.Password);
+
+                if (user == null)
+                {
+                    _logger.LogWarning($"User with email {authenticationRequestBody.Email} is Not Authorized");
+                    return Unauthorized($"User with email {authenticationRequestBody.Email} is Not Authorized");
+                }
+
+                var secretKey = _configuration["Authentication:SecretForKey"];
+                var issuer = _configuration["Authentication:Issuer"];
+                var audience = _configuration["Authentication:Audience"];
+                var token = _tokenGenerator.GenerateToken(user.Email, user.PasswordHash, secretKey, issuer, audience, user.Role);
+
+                _logger.LogInformation($"User '{user.Email}' authenticated successfully. Role: {user.Role}");
+                return Ok(token);
             }
-
-            var user = _tokenGenerator.ValidateUserCredentials(authenticationRequestBody.Email, authenticationRequestBody.Password);
-
-            if (user == null)
-                return Unauthorized($"User with email {authenticationRequestBody.Email} is Not Authorized");
-
-            var secretKey = _configuration["Authentication:SecretForKey"];
-            var issuer = _configuration["Authentication:Issuer"];
-            var audience = _configuration["Authentication:Audience"];
-            var token = _tokenGenerator.GenerateToken(user.Email, user.PasswordHash, secretKey, issuer, audience, user.Role);
-
-            return Ok(token);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while processing authentication.");
+                throw;
+            }
         }
-
     }
 }

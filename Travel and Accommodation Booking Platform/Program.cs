@@ -1,5 +1,4 @@
 using Application;
-using FluentAssertions.Common;
 using Infrastructure.Data;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;

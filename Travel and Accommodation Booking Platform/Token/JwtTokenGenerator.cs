@@ -1,9 +1,6 @@
 ﻿using Domain.Entities;
-using Infrastructure.Repositories;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
+using Org.BouncyCastle.Crypto.Generators;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

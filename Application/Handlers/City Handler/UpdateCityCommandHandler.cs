@@ -1,14 +1,10 @@
 ﻿using Application.Commands.City_Commands;
-using Application.DTOs;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using static Domain.Interfaces.IRepository;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Application.Handlers.City_Handler
 {

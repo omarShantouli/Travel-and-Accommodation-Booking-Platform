@@ -5,9 +5,6 @@ using Domain.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using static Domain.Interfaces.IRepository;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Application.Handlers
 {

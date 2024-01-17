@@ -4,6 +4,7 @@ using Application.DTOs;
 using Application.Queries;
 using Application.Queries.City_Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +13,7 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
     /// <summary>
     /// Controller for managing city-related operations.
     /// </summary>
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/cities")]
     public class CityController : Controller

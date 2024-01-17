@@ -30,6 +30,7 @@
             </summary>
             <param name="configuration">The configuration.</param>
             <param name="appUserRepository">The repository for <see cref="T:Domain.Entities.AppUser"/>.</param>
+            <param name="logger">The logger.</param>
         </member>
         <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.AuthenticationController.Authenticate(Travel_and_Accommodation_Booking_Platform.Controllers.AuthenticationController.AuthenticationRequestBody)">
             <summary>
@@ -43,13 +44,12 @@
             Controller for managing city-related operations.
             </summary>
         </member>
-        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.CityController.#ctor(MediatR.IMediator,Domain.Interfaces.IRepository.IRepository{Domain.Entities.City},AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{Travel_and_Accommodation_Booking_Platform.Controllers.CityController})">
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.CityController.#ctor(MediatR.IMediator,Microsoft.Extensions.Logging.ILogger{Travel_and_Accommodation_Booking_Platform.Controllers.CityController})">
             <summary>
             Initializes a new instance of the <see cref="T:Travel_and_Accommodation_Booking_Platform.Controllers.CityController"/> class.
             </summary>
             <param name="mediator">The mediator for handling queries and commands.</param>
-            <param name="cityRepository">The repository for city entities.</param>
-            <param name="mapper">The mapper for mapping between DTOs and entities.</param>
+            <param name="logger">The logger for capturing and logging information related to CityController.</param>
         </member>
         <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.CityController.GetAllCities">
             <summary>
@@ -169,6 +169,100 @@
             Deletes an image from a specific city.
             </summary>
             <param name="cityId">The unique identifier of the city.</param>
+            <param name="imageId">The unique identifier of the image to be deleted.</param>
+            <returns>
+            No content with a 204 No Content status upon successful deletion.
+            </returns>
+        </member>
+        <member name="T:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController">
+            <summary>
+            Controller for managing hotel-related operations.
+            </summary>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController.#ctor(MediatR.IMediator,Microsoft.Extensions.Logging.ILogger{Travel_and_Accommodation_Booking_Platform.Controllers.HotelController})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController"/> class.
+            </summary>
+            <param name="mediator">The mediator for handling queries and commands.</param>
+            <param name="logger">The logger for capturing and logging information related to HotelController.</param>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController.GetHotelById(System.Guid)">
+            <summary>
+            Retrieves a specific hotel by its unique identifier.
+            </summary>
+            <param name="id">The unique identifier of the hotel.</param>
+            <returns>
+            A hotel data transfer object (DTO).
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController.GetAvailableRoomsInHotel(System.Guid)">
+            <summary>
+            Retrieves a list of available rooms in a specific hotel.
+            </summary>
+            <param name="id">The unique identifier of the hotel.</param>
+            <returns>
+            <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/> with HTTP status code:
+            - 200 (OK) if available rooms are found.
+            - 404 (Not Found) if no available rooms are found for the given hotel ID.
+            - 500 (Internal Server Error) in case of unexpected errors.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController.GetRoomsInHotel(System.Guid)">
+            <summary>
+            Retrieves a list of rooms in a specific hotel.
+            </summary>
+            <param name="id">The unique identifier of the hotel.</param>
+            <returns>
+            <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/> with HTTP status code:
+            - 200 (OK) if rooms are found.
+            - 404 (Not Found) if no rooms are found for the given hotel ID.
+            - 500 (Internal Server Error) in case of unexpected errors.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController.AddRoomInHotel(System.Guid,Application.DTOs.RoomDto)">
+            <summary>
+            Adds a new room to a specific hotel.
+            </summary>
+            <param name="id">The unique identifier of the hotel.</param>
+            <param name="room">The room data to be added.</param>
+            <returns>
+            No content with a 204 No Content status upon successful addition.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController.DeleteRoomFromHotel(System.Guid,System.Guid)">
+            <summary>
+            Deletes a room from a specific hotel.
+            </summary>
+            <param name="hotelId">The unique identifier of the hotel.</param>
+            <param name="roomId">The unique identifier of the room to be deleted.</param>
+            <returns>
+            No content with a 204 No Content status upon successful deletion.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController.GetImagesOfHotel(System.Guid)">
+            <summary>
+            Retrieves a list of images associated with a specific hotel.
+            </summary>
+            <param name="id">The unique identifier of the hotel.</param>
+            <returns>
+            A collection of image data transfer objects (DTOs).
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController.AddImageToHotel(System.Guid,Application.DTOs.ImageDto)">
+            <summary>
+            Adds a new image to a specific hotel.
+            </summary>
+            <param name="id">The unique identifier of the hotel.</param>
+            <param name="image">The image data to be added.</param>
+            <returns>
+            No content with a 204 No Content status upon successful addition.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController.DeleteImageFromHotel(System.Guid,System.Guid)">
+            <summary>
+            Deletes an image from a specific hotel.
+            </summary>
+            <param name="hotelId">The unique identifier of the hotel.</param>
             <param name="imageId">The unique identifier of the image to be deleted.</param>
             <returns>
             No content with a 204 No Content status upon successful deletion.

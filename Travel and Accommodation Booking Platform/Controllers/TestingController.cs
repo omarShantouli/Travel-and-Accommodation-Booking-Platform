@@ -6,12 +6,9 @@ using Application.Queries;
 using Application.Queries.Rooms_Queries;
 using AutoMapper;
 using Domain.Entities;
-using Domain.Exceptions;
-using Infrastructure.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using static Domain.Interfaces.IRepository;
 
 namespace Travel_and_Accommodation_Booking_Platform.Controllers
