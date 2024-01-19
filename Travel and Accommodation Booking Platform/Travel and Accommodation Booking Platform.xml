@@ -321,13 +321,90 @@
             No content with a 204 No Content status upon successful deletion.
             </returns>
         </member>
-        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.TestingController.PatchCity(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{Application.DTOs.CityDto})">
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController.GetHotelReviews(System.Guid)">
             <summary>
-            
+            Gets reviews of a hotel based on the provided hotel ID.
             </summary>
-            <param name="id"></param>
-            <param name="patchDocument"></param>
-            <returns></returns>
+            <param name="hotelId">The unique identifier of the hotel.</param>
+            <returns>
+            Ok with a 200 status and a list of review DTOs upon successful retrieval.
+            Not found with a 404 status if the hotel with the specified ID is not found.
+            Internal server error with a 500 status if an unexpected error occurs during the retrieval.
+            </returns>
+        </member>
+        <member name="T:Travel_and_Accommodation_Booking_Platform.Controllers.ImageController">
+            <summary>
+            Controller for managing image-related operations.
+            </summary>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.ImageController.#ctor(MediatR.IMediator,Microsoft.Extensions.Logging.ILogger{Travel_and_Accommodation_Booking_Platform.Controllers.ImageController})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Travel_and_Accommodation_Booking_Platform.Controllers.ImageController"/> class.
+            </summary>
+            <param name="mediator">The mediator for handling queries and commands.</param>
+            <param name="logger">The logger for capturing and logging information related to ImageController.</param>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.ImageController.GetAllImages">
+            <summary>
+            Retrieves a list of all images.
+            </summary>
+            <returns>
+            A list of image data transfer objects (DTOs).
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.ImageController.CreateImage(Application.DTOs.ImageDto)">
+            <summary>
+            Creates a new image.
+            </summary>
+            <param name="image">The image data to be created.</param>
+            <returns>
+            No content with a 204 No Content status upon successful creation.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.ImageController.GetImageById(System.Guid)">
+            <summary>
+            Retrieves a specific image by its unique identifier.
+            </summary>
+            <param name="id">The unique identifier of the image.</param>
+            <returns>
+            An image data transfer object (DTO).
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.ImageController.UpdateImage(System.Guid,Application.DTOs.ImageDto)">
+            <summary>
+            Updates an image with the specified ID.
+            </summary>
+            <param name="id">The unique identifier of the image.</param>
+            <param name="updatedImage">The updated image information.</param>
+            <returns>
+            No content with a 204 No Content status upon successful update.
+            Bad request with a 400 Bad Request status if the updated image data is null or invalid.
+            Not found with a 404 Not Found status if the image with the specified ID is not found.
+            Internal server error with a 500 status if an unexpected error occurs during the update.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.ImageController.PatchImage(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{Application.DTOs.ImageDto})">
+            <summary>
+            Partially updates an image using JSON Patch.
+            </summary>
+            <param name="id">The unique identifier of the image.</param>
+            <param name="patchDocument">The JSON Patch document containing partial updates.</param>
+            <returns>
+            No content with a 204 No Content status upon successful update.
+            Bad request with a 400 Bad Request status if the patch document is null or invalid.
+            Not found with a 404 Not Found status if the image with the specified ID is not found.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.ImageController.DeleteImage(System.Guid)">
+            <summary>
+            Deletes an image with the specified ID.
+            </summary>
+            <param name="id">The unique identifier of the image to delete.</param>
+            <returns>
+            No content with a 204 No Content status upon successful deletion.
+            Not found with a 404 Not Found status if the image with the specified ID is not found.
+            Internal server error with a 500 status if an unexpected error occurs during the deletion.
+            </returns>
         </member>
         <member name="T:Travel_and_Accommodation_Booking_Platform.Models.ErrorModel">
             <summary>

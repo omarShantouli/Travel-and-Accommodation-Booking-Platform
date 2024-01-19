@@ -403,5 +403,37 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
             }
         }
 
-    }
+        /// <summary>
+        /// Gets reviews of a hotel based on the provided hotel ID.
+        /// </summary>
+        /// <param name="hotelId">The unique identifier of the hotel.</param>
+        /// <returns>
+        /// Ok with a 200 status and a list of review DTOs upon successful retrieval.
+        /// Not found with a 404 status if the hotel with the specified ID is not found.
+        /// Internal server error with a 500 status if an unexpected error occurs during the retrieval.
+        /// </returns>
+        [HttpGet("reviews/{hotelId}")]
+        public async Task<IActionResult> GetHotelReviews(Guid hotelId)
+        {
+            try
+            {
+                var query = new GetReviewsOfHotelQuery { HotelId = hotelId };
+                var reviews = await _mediator.Send(query);
+
+                if (reviews != null && reviews.Count > 0)
+                {
+                    return Ok(reviews);
+                }
+                else
+                {
+                    return NotFound($"No reviews found for hotel with ID {hotelId}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+
+}
 }
