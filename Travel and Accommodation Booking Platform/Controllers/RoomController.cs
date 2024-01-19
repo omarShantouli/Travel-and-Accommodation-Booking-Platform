@@ -13,7 +13,7 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
     /// </summary>
    // [Authorize]
     [ApiController]
-    [Route("api/rooms")]  // Adjust based on your actual route
+    [Route("api/rooms")]
     public class RoomController : Controller
     {
         private readonly IMediator _mediator;
@@ -55,7 +55,6 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception or handle it based on your application's requirements
                 _logger.LogInformation($"Error in GetAllRoomsQuery: {ex.Message}");
 
                 // Status Code: 500 - Internal Server Error
@@ -89,7 +88,6 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed.
                 _logger.LogError(ex, $"Error in GetRoomByIdQuery for RoomId: {id}");
                 return StatusCode(500, "An error occurred while processing the request.");
             }
@@ -115,7 +113,6 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed.
                 _logger.LogError(ex, "An error occurred while creating a room.");
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
@@ -231,12 +228,11 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
                 var query = new GetImagesOfRoomQuery { RoomId = id };
                 var result = await _mediator.Send(query);
 
-                // If images are found, return them with a 200 OK status.
+                // 200 OK status.
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed.
                 _logger.LogError(ex, $"An error occurred while getting images of a room with RoomId: {id}");
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
@@ -263,7 +259,6 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed.
                 _logger.LogError(ex, $"An error occurred while adding an image to a room with RoomId: {id}");
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
@@ -290,7 +285,6 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed.
                 _logger.LogError(ex, $"An error occurred while deleting an image from a room with RoomId: {roomId}");
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }

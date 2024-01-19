@@ -12,16 +12,16 @@ namespace Application.Handlers.Rooms_Handler
     /// <summary>
     /// Handles the command to apply partial updates to a room entity.
     /// </summary>
-    public class PatchRoomCommandHandler : IRequestHandler<PatchRoomCommand>  // Adjust based on your actual command
+    public class PatchRoomCommandHandler : IRequestHandler<PatchRoomCommand>  
     {
-        private readonly IRepository<Rooms> _roomRepository;  // Adjust based on your actual entity
+        private readonly IRepository<Rooms> _roomRepository;  
         private readonly IMapper _mapper;
         private readonly ILogger<PatchRoomCommandHandler> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PatchRoomCommandHandler"/> class.
         /// </summary>
-        /// <param name="roomRepository">The repository for room entities.</param>  // Adjust based on your actual entity
+        /// <param name="roomRepository">The repository for room entities.</param>  
         /// <param name="mapper">The AutoMapper for mapping entities to DTOs.</param>
         /// <param name="logger">The logger for logging messages.</param>
         public PatchRoomCommandHandler(IRepository<Rooms> roomRepository, IMapper mapper, ILogger<PatchRoomCommandHandler> logger)
@@ -41,14 +41,14 @@ namespace Application.Handlers.Rooms_Handler
         {
             try
             {
-                _logger.LogInformation($"Handling PatchRoomCommand for RoomId: {request.RoomId}");  // Adjust based on your actual command
+                _logger.LogInformation($"Handling PatchRoomCommand for RoomId: {request.RoomId}"); 
 
-                var room = await _roomRepository.GetByIdAsync(request.RoomId);  // Adjust based on your actual entity
+                var room = await _roomRepository.GetByIdAsync(request.RoomId);  
 
                 if (room == null)
                 {
-                    _logger.LogWarning($"Room with ID {request.RoomId} not found.");  // Adjust based on your actual entity
-                    throw new EntityNotFoundException($"Room with ID {request.RoomId} not found.");  // Adjust based on your actual entity
+                    _logger.LogWarning($"Room with ID {request.RoomId} not found.");  
+                    throw new EntityNotFoundException($"Room with ID {request.RoomId} not found."); 
                 }
 
                 var roomDto = _mapper.Map<RoomDto>(room);
@@ -59,11 +59,11 @@ namespace Application.Handlers.Rooms_Handler
 
                 await _roomRepository.SaveChangesAsync();
 
-                _logger.LogInformation($"PatchRoomCommand handled successfully for RoomId: {request.RoomId}");  // Adjust based on your actual command
+                _logger.LogInformation($"PatchRoomCommand handled successfully for RoomId: {request.RoomId}"); 
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error occurred while handling PatchRoomCommand for RoomId: {request.RoomId}");  // Adjust based on your actual command
+                _logger.LogError(ex, $"Error occurred while handling PatchRoomCommand for RoomId: {request.RoomId}"); 
                 throw;
             }
         }

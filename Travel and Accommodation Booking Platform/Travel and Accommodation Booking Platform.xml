@@ -39,6 +39,36 @@
             <param name="authenticationRequestBody">The request body containing user credentials.</param>
             <returns>An action result containing the authentication token or an error response.</returns>
         </member>
+        <member name="T:Travel_and_Accommodation_Booking_Platform.Controllers.BookingController">
+            <summary>
+            Controller for managing booking-related operations.
+            </summary>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.BookingController.#ctor(MediatR.IMediator,Microsoft.Extensions.Logging.ILogger{Travel_and_Accommodation_Booking_Platform.Controllers.BookingController})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Travel_and_Accommodation_Booking_Platform.Controllers.BookingController"/> class.
+            </summary>
+            <param name="mediator">The mediator for handling queries and commands.</param>
+            <param name="logger">The logger for capturing and logging information related to BookingController.</param>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.BookingController.CreateBooking(Application.DTOs.BookingDto)">
+            <summary>
+            Creates a new booking.
+            </summary>
+            <param name="booking">The booking data to be created.</param>
+            <returns>
+            No content with a 204 No Content status upon successful creation.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.BookingController.GetBookingById(System.Guid)">
+            <summary>
+            Retrieves a specific booking by its unique identifier.
+            </summary>
+            <param name="id">The unique identifier of the booking.</param>
+            <returns>
+            A booking data transfer object (DTO).
+            </returns>
+        </member>
         <member name="T:Travel_and_Accommodation_Booking_Platform.Controllers.CityController">
             <summary>
             Controller for managing city-related operations.

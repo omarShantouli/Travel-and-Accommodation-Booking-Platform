@@ -55,7 +55,6 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception or handle it based on your application's requirements
                 _logger.LogInformation($"Error in GetAllImagesQuery: {ex.Message}");
 
                 // Status Code: 500 - Internal Server Error
@@ -83,7 +82,6 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed.
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
@@ -114,7 +112,6 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception or handle it based on your application's requirements
                 _logger.LogInformation($"Error in GetImageByIdQuery: {ex.Message}");
 
                 // Status Code: 500 - Internal Server Error
@@ -151,7 +148,6 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed.
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
@@ -184,7 +180,6 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed.
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
@@ -211,7 +206,6 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed.
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }

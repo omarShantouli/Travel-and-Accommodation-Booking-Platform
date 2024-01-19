@@ -12,16 +12,16 @@ namespace Application.Handlers.Rooms_Handler
     /// <summary>
     /// Handles the query to get all rooms.
     /// </summary>
-    public class GetAllRoomsQueryHandler : IRequestHandler<GetAllRoomsQuery, List<RoomDto>>  // Adjust based on your actual query
+    public class GetAllRoomsQueryHandler : IRequestHandler<GetAllRoomsQuery, List<RoomDto>>  
     {
-        private readonly IRepository<Rooms> _roomRepository;  // Adjust based on your actual entity
+        private readonly IRepository<Rooms> _roomRepository;  
         private readonly IMapper _mapper;
         private readonly ILogger<GetAllRoomsQueryHandler> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetAllRoomsQueryHandler"/> class.
         /// </summary>
-        /// <param name="roomRepository">The repository for room entities.</param>  // Adjust based on your actual entity
+        /// <param name="roomRepository">The repository for room entities.</param> 
         /// <param name="mapper">The AutoMapper for mapping entities to DTOs.</param>
         /// <param name="logger">The logger for capturing and logging information related to GetAllRoomsQueryHandler.</param>
         public GetAllRoomsQueryHandler(IRepository<Rooms> roomRepository, IMapper mapper, ILogger<GetAllRoomsQueryHandler> logger)
@@ -41,25 +41,25 @@ namespace Application.Handlers.Rooms_Handler
         {
             try
             {
-                _logger.LogInformation("Handling GetAllRoomsQuery.");  // Adjust based on your actual query
+                _logger.LogInformation("Handling GetAllRoomsQuery."); 
 
-                var rooms = _roomRepository.GetAll();  // Adjust based on your actual entity
+                var rooms = _roomRepository.GetAll(); 
 
                 if (rooms == null)
                 {
-                    _logger.LogWarning("No rooms found.");  // Adjust based on your actual entity
-                    throw new EntityNotFoundException("There are no rooms found.");  // Adjust based on your actual entity
+                    _logger.LogWarning("No rooms found.");  
+                    throw new EntityNotFoundException("There are no rooms found."); 
                 }
 
-                var roomsDto = _mapper.Map<List<RoomDto>>(rooms);  // Adjust based on your actual entity
+                var roomsDto = _mapper.Map<List<RoomDto>>(rooms);  
 
-                _logger.LogInformation("GetAllRoomsQuery handled successfully.");  // Adjust based on your actual query
+                _logger.LogInformation("GetAllRoomsQuery handled successfully."); 
 
                 return roomsDto;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while handling GetAllRoomsQuery.");  // Adjust based on your actual query
+                _logger.LogError(ex, "Error occurred while handling GetAllRoomsQuery."); 
                 throw;
             }
         }

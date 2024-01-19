@@ -11,16 +11,16 @@ namespace Application.Handlers.Rooms_Handler
     /// <summary>
     /// Handles the command to create a new room.
     /// </summary>
-    public class CreateRoomCommandHandler : IRequestHandler<CreateRoomCommand>  // Adjust based on your actual command
+    public class CreateRoomCommandHandler : IRequestHandler<CreateRoomCommand> 
     {
-        private readonly IRepository<Rooms> _roomRepository;  // Adjust based on your actual entity
+        private readonly IRepository<Rooms> _roomRepository; 
         private readonly IMapper _mapper;
         private readonly ILogger<CreateRoomCommandHandler> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateRoomCommandHandler"/> class.
         /// </summary>
-        /// <param name="roomRepository">The repository for room entities.</param>  // Adjust based on your actual entity
+        /// <param name="roomRepository">The repository for room entities.</param>  
         /// <param name="mapper">The AutoMapper instance for object mapping.</param>
         /// <param name="logger">The logger for capturing and logging information related to CreateRoomCommandHandler.</param>
         public CreateRoomCommandHandler(IRepository<Rooms> roomRepository, IMapper mapper, ILogger<CreateRoomCommandHandler> logger)
