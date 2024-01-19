@@ -406,6 +406,109 @@
             Internal server error with a 500 status if an unexpected error occurs during the deletion.
             </returns>
         </member>
+        <member name="T:Travel_and_Accommodation_Booking_Platform.Controllers.RoomController">
+            <summary>
+            Controller for managing room-related operations.
+            </summary>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomController.#ctor(MediatR.IMediator,Microsoft.Extensions.Logging.ILogger{Travel_and_Accommodation_Booking_Platform.Controllers.RoomController})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Travel_and_Accommodation_Booking_Platform.Controllers.RoomController"/> class.
+            </summary>
+            <param name="mediator">The mediator for handling queries and commands.</param>
+            <param name="logger">The logger for capturing and logging information related to RoomController.</param>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomController.GetAllRooms">
+            <summary>
+            Retrieves a list of all rooms.
+            </summary>
+            <returns>
+            A list of room data transfer objects (DTOs).
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomController.GetRoomById(System.Guid)">
+            <summary>
+            Retrieves a specific room by its unique identifier.
+            </summary>
+            <param name="id">The unique identifier of the room.</param>
+            <returns>
+            A room data transfer object (DTO).
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomController.CreateRoom(Application.DTOs.RoomDto)">
+            <summary>
+            Creates a new room.
+            </summary>
+            <param name="room">The room data to be created.</param>
+            <returns>
+            No content with a 204 No Content status upon successful creation.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomController.UpdateRoom(System.Guid,Application.DTOs.RoomDto)">
+            <summary>
+            Updates a room with the specified ID.
+            </summary>
+            <param name="id">The unique identifier of the room.</param>
+            <param name="updatedRoom">The updated room information.</param>
+            <returns>
+            No content with a 204 No Content status upon successful update.
+            Bad request with a 400 Bad Request status if the updated room data is null or invalid.
+            Not found with a 404 Not Found status if the room with the specified ID is not found.
+            Internal server error with a 500 status if an unexpected error occurs during the update.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomController.PatchRoom(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{Application.DTOs.RoomDto})">
+            <summary>
+            Partially updates a room using JSON Patch.
+            </summary>
+            <param name="id">The unique identifier of the room.</param>
+            <param name="patchDocument">The JSON Patch document containing partial updates.</param>
+            <returns>
+            No content with a 204 No Content status upon successful update.
+            Bad request with a 400 Bad Request status if the patch document is null or invalid.
+            Not found with a 404 Not Found status if the room with the specified ID is not found.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomController.DeleteRoom(System.Guid)">
+            <summary>
+            Deletes a room with the specified ID.
+            </summary>
+            <param name="id">The unique identifier of the room to delete.</param>
+            <returns>
+            No content with a 204 No Content status upon successful deletion.
+            Not found with a 404 Not Found status if the room with the specified ID is not found.
+            Internal server error with a 500 status if an unexpected error occurs during the deletion.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomController.GetImagesOfRoom(System.Guid)">
+            <summary>
+            Retrieves a list of images associated with a specific room.
+            </summary>
+            <param name="id">The unique identifier of the room.</param>
+            <returns>
+            A collection of image data transfer objects (DTOs).
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomController.AddImageToRoom(System.Guid,Application.DTOs.ImageDto)">
+            <summary>
+            Adds a new image to a specific room.
+            </summary>
+            <param name="id">The unique identifier of the room.</param>
+            <param name="image">The image data to be added.</param>
+            <returns>
+            No content with a 204 No Content status upon successful addition.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomController.DeleteImageFromRoom(System.Guid,System.Guid)">
+            <summary>
+            Deletes an image from a specific room.
+            </summary>
+            <param name="roomId">The unique identifier of the room.</param>
+            <param name="imageId">The unique identifier of the image to be deleted.</param>
+            <returns>
+            No content with a 204 No Content status upon successful deletion.
+            </returns>
+        </member>
         <member name="T:Travel_and_Accommodation_Booking_Platform.Models.ErrorModel">
             <summary>
             Represents an error model with information about a specific field and associated error message.

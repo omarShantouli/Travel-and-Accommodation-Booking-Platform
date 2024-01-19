@@ -5,7 +5,6 @@ using Domain.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using static Domain.Interfaces.IRepository;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Application.Handlers.Image_Handler
 {
