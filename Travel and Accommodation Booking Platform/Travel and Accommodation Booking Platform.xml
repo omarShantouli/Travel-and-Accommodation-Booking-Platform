@@ -539,6 +539,80 @@
             No content with a 204 No Content status upon successful deletion.
             </returns>
         </member>
+        <member name="T:Travel_and_Accommodation_Booking_Platform.Controllers.RoomTypeController">
+            <summary>
+            Controller for managing room type-related operations.
+            </summary>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomTypeController.#ctor(MediatR.IMediator,Microsoft.Extensions.Logging.ILogger{Travel_and_Accommodation_Booking_Platform.Controllers.RoomTypeController})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Travel_and_Accommodation_Booking_Platform.Controllers.RoomTypeController"/> class.
+            </summary>
+            <param name="mediator">The mediator for handling queries and commands.</param>
+            <param name="logger">The logger for capturing and logging information related to RoomTypeController.</param>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomTypeController.GetAllRoomTypes">
+            <summary>
+            Retrieves a list of all room types.
+            </summary>
+            <returns>
+            A list of room type data transfer objects (DTOs).
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomTypeController.CreateRoomType(Application.DTOs.RoomTypeDto)">
+            <summary>
+            Creates a new room type.
+            </summary>
+            <param name="roomType">The room type data to be created.</param>
+            <returns>
+            No content with a 204 No Content status upon successful creation.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomTypeController.GetRoomTypeById(System.Guid)">
+            <summary>
+            Retrieves a specific room type by its unique identifier.
+            </summary>
+            <param name="id">The unique identifier of the room type.</param>
+            <returns>
+            A room type data transfer object (DTO).
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomTypeController.UpdateRoomType(System.Guid,Application.DTOs.RoomTypeDto)">
+            <summary>
+            Updates a room type with the specified ID.
+            </summary>
+            <param name="id">The unique identifier of the room type.</param>
+            <param name="updatedRoomType">The updated room type information.</param>
+            <returns>
+            No content with a 204 No Content status upon successful update.
+            Bad request with a 400 Bad Request status if the updated room type data is null or invalid.
+            Not found with a 404 Not Found status if the room type with the specified ID is not found.
+            Internal server error with a 500 status if an unexpected error occurs during the update.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomTypeController.PatchRoomType(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{Application.DTOs.RoomTypeDto})">
+            <summary>
+            Partially updates a room type using JSON Patch.
+            </summary>
+            <param name="id">The unique identifier of the room type.</param>
+            <param name="patchDocument">The JSON Patch document containing partial updates.</param>
+            <returns>
+            No content with a 204 No Content status upon successful update.
+            Bad request with a 400 Bad Request status if the patch document is null or invalid.
+            Not found with a 404 Not Found status if the room type with the specified ID is not found.
+            </returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomTypeController.DeleteRoomType(System.Guid)">
+            <summary>
+            Deletes a room type with the specified ID.
+            </summary>
+            <param name="id">The unique identifier of the room type to delete.</param>
+            <returns>
+            No content with a 204 No Content status upon successful deletion.
+            Not found with a 404 Not Found status if the room type with the specified ID is not found.
+            Internal server error with a 500 status if an unexpected error occurs during the deletion.
+            </returns>
+        </member>
         <member name="T:Travel_and_Accommodation_Booking_Platform.Models.ErrorModel">
             <summary>
             Represents an error model with information about a specific field and associated error message.
