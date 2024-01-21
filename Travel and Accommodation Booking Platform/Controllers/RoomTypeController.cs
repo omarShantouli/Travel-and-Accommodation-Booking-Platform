@@ -1,6 +1,7 @@
 ﻿using Application.Commands.RoomType_Commands;
 using Application.DTOs;
 using Application.Queries.RoomType_Queries;
+using Domain.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
@@ -11,7 +12,7 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
     /// <summary>
     /// Controller for managing room type-related operations.
     /// </summary>
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/roomtypes")]
     public class RoomTypeController : Controller
@@ -209,6 +210,94 @@ namespace Travel_and_Accommodation_Booking_Platform.Controllers
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Gets a list of rooms of a specific room type.
+        /// </summary>
+        /// <param name="roomTypeId">The RoomTypeId for which to retrieve rooms.</param>
+        /// <returns>A list of RoomDto representing the rooms of the specified room type.</returns>
+        [HttpGet("GetRoomsOfRoomType/{roomTypeId}")]
+        public async Task<ActionResult<List<RoomDto>>> GetRoomsOfRoomType(Guid roomTypeId)
+        {
+            try
+            {
+                var query = new GetRoomsOfRoomTypeQuery { RoomTypeId = roomTypeId };
+
+                _logger.LogInformation($"Handling GetRoomsOfRoomType query for RoomTypeId: {roomTypeId}");
+
+                var result = await _mediator.Send(query);
+
+                _logger.LogInformation($"Successfully handled GetRoomsOfRoomType query for RoomTypeId: {roomTypeId}");
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred while handling GetRoomsOfRoomType query for RoomTypeId: {roomTypeId}");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Adds a room to a specific room type.
+        /// </summary>
+        /// <param name="roomTypeId">The unique identifier of the room type.</param>
+        /// <param name="roomId">The unique identifier of the room.</param>
+        /// <returns>Returns an action result indicating success or failure.</returns>
+        [HttpPost("AddRoomToRoomType")]
+        public async Task<IActionResult> AddRoomToRoomType(Guid roomTypeId, Guid roomId)
+        {
+            try
+            {
+                var command = new AddRoomToRoomTypeCommand { RoomId = roomId, RoomTypeId = roomTypeId };
+                _logger.LogInformation($"Handling AddRoomToRoomTypeCommand for RoomId: {command.RoomId}," +
+                    $" RoomTypeId: {command.RoomTypeId}");
+
+                await _mediator.Send(command);
+
+                _logger.LogInformation($"Successfully handled AddRoomToRoomTypeCommand for RoomId: {command.RoomId}," +
+                    $" RoomTypeId: {command.RoomTypeId}");
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred while handling AddRoomToRoomTypeCommand for RoomId: {roomId}," +
+                    $" RoomTypeId: {roomTypeId}");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
+        /// <summary>
+        /// Deletes a room by RoomId and RoomTypeId.
+        /// </summary>
+        /// <param name="roomTypeId">The unique identifier of the room type.</param>
+        /// <param name="roomId">The unique identifier of the room.</param>
+        /// <returns>Returns an action result indicating success or failure.</returns>
+        [HttpDelete("DeleteRoomByRoomType")]
+        public async Task<IActionResult> DeleteRoomByRoomType(Guid roomTypeId, Guid roomId)
+        {
+            try
+            {
+                var command = new DeleteRoomByRoomTypeCommand { RoomId = roomId, RoomTypeId = roomTypeId };
+                _logger.LogInformation($"Handling DeleteRoomByRoomTypeCommand for RoomId: {command.RoomId}," +
+                    $" RoomTypeId: {command.RoomTypeId}");
+
+                await _mediator.Send(command);
+
+                _logger.LogInformation($"Successfully handled DeleteRoomByRoomTypeCommand for RoomId: {command.RoomId}," +
+                    $" RoomTypeId: {command.RoomTypeId}");
+
+                return NoContent(); // 204 No Content
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred while handling DeleteRoomByRoomTypeCommand: {ex.Message}");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
 
     }
 }

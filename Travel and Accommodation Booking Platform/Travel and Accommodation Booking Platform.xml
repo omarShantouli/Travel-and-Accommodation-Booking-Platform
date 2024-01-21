@@ -613,6 +613,29 @@
             Internal server error with a 500 status if an unexpected error occurs during the deletion.
             </returns>
         </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomTypeController.GetRoomsOfRoomType(System.Guid)">
+            <summary>
+            Gets a list of rooms of a specific room type.
+            </summary>
+            <param name="roomTypeId">The RoomTypeId for which to retrieve rooms.</param>
+            <returns>A list of RoomDto representing the rooms of the specified room type.</returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomTypeController.AddRoomToRoomType(System.Guid,System.Guid)">
+            <summary>
+            Adds a room to a specific room type.
+            </summary>
+            <param name="roomTypeId">The unique identifier of the room type.</param>
+            <param name="roomId">The unique identifier of the room.</param>
+            <returns>Returns an action result indicating success or failure.</returns>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.RoomTypeController.DeleteRoomByRoomType(System.Guid,System.Guid)">
+            <summary>
+            Deletes a room by RoomId and RoomTypeId.
+            </summary>
+            <param name="roomTypeId">The unique identifier of the room type.</param>
+            <param name="roomId">The unique identifier of the room.</param>
+            <returns>Returns an action result indicating success or failure.</returns>
+        </member>
         <member name="T:Travel_and_Accommodation_Booking_Platform.Models.ErrorModel">
             <summary>
             Represents an error model with information about a specific field and associated error message.
