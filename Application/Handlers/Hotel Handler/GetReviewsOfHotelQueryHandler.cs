@@ -1,8 +1,10 @@
 ﻿using Application.DTOs;
 using Application.Queries;
 using AutoMapper;
+using Castle.Core.Logging;
 using Domain.Entities;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using static Domain.Interfaces.IRepository;
 
 namespace Application.Handlers
@@ -15,6 +17,7 @@ namespace Application.Handlers
         private readonly IRepository<Rooms> _roomRepository;
         private readonly IRepository<Reviews> _reviewsRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<GetReviewsOfHotelQueryHandler> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetReviewsOfHotelQueryHandler"/> class.
@@ -23,11 +26,12 @@ namespace Application.Handlers
         /// <param name="reviewsRepository">The repository for review entities.</param>
         /// <param name="mapper">The AutoMapper instance for object mapping.</param>
         public GetReviewsOfHotelQueryHandler(IRepository<Rooms> roomRepository,
-               IRepository<Reviews> reviewsRepository, IMapper mapper)
+               IRepository<Reviews> reviewsRepository, IMapper mapper, ILogger<GetReviewsOfHotelQueryHandler> logger)
         {
             _roomRepository = roomRepository;
             _reviewsRepository = reviewsRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         /// <summary>
@@ -49,20 +53,15 @@ namespace Application.Handlers
 
                 var reviewsDto = _mapper.Map<List<ReviewDto>>(hotelReviews);
 
-                LogHotelReviewsInformation(request.HotelId, reviewsDto.Count);
+                _logger.LogInformation($"Reviews of HotelId: {request.HotelId} - Count: {reviewsDto.Count}");
 
                 return reviewsDto;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred while handling GetReviewsOfHotelQuery: {ex.Message}");
+                _logger.LogInformation($"An error occurred while handling GetReviewsOfHotelQuery: {ex.Message}");
                 throw;
             }
-        }
-
-        private void LogHotelReviewsInformation(Guid hotelId, int numberOfReviews)
-        {
-            Console.WriteLine($"Reviews of HotelId: {hotelId} - Count: {numberOfReviews}");
         }
     }
 }

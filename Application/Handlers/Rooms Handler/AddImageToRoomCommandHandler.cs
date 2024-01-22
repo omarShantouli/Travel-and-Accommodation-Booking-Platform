@@ -3,6 +3,7 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Enums;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using static Domain.Interfaces.IRepository;
 
 namespace Application.Handlers.Rooms_Handler
@@ -14,16 +15,19 @@ namespace Application.Handlers.Rooms_Handler
     {
         private readonly IRepository<Images> _imageRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<AddImageToRoomCommandHandler> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AddImageToRoomCommandHandler"/> class.
         /// </summary>
         /// <param name="imageRepository">The repository for image entities.</param>
         /// <param name="mapper">The AutoMapper instance for object mapping.</param>
-        public AddImageToRoomCommandHandler(IRepository<Images> imageRepository, IMapper mapper)
+        public AddImageToRoomCommandHandler(IRepository<Images> imageRepository, IMapper mapper,
+                                            ILogger<AddImageToRoomCommandHandler> logger)
         {
             _imageRepository = imageRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         /// <summary>
@@ -42,18 +46,15 @@ namespace Application.Handlers.Rooms_Handler
                 await _imageRepository.CreateAsync(image);
                 await _imageRepository.SaveChangesAsync();
 
-                LogImageAddedToRoom(request.RoomId, image.Id);
+                _logger.LogInformation($"Image with ID {image.Id} added to Room with ID {request.RoomId}.");
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred while handling AddImageToRoomCommand: {ex.Message}");
+                _logger.LogInformation($"An error occurred while handling AddImageToRoomCommand: {ex.Message}");
                 throw;
             }
         }
 
-        private void LogImageAddedToRoom(Guid roomId, Guid imageId)
-        {
-            Console.WriteLine($"Image with ID {imageId} added to Room with ID {roomId}.");
-        }
     }
 }

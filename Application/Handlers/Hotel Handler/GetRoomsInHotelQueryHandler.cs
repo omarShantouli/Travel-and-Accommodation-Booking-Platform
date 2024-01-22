@@ -1,9 +1,11 @@
 ﻿using Application.DTOs;
 using Application.Queries;
 using AutoMapper;
+using Castle.Core.Logging;
 using Domain.Entities;
 using Domain.Exceptions;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using static Domain.Interfaces.IRepository;
 
 namespace Application.Handlers
@@ -15,6 +17,7 @@ namespace Application.Handlers
     {
         private readonly IRepository<Hotels> _hotelRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<GetRoomsInHotelQueryHandler> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetRoomsInHotelQueryHandler"/> class.
@@ -40,32 +43,24 @@ namespace Application.Handlers
                 var hotel = await _hotelRepository.GetByIdAsync(request.HotelId);
                 if (hotel == null)
                 {
-                    LogHotelNotFound(request.HotelId);
+                    _logger.LogInformation($"Hotel with ID {request.HotelId} not found.");
+
                     throw new EntityNotFoundException($"Hotel with ID {request.HotelId} not found.");
                 }
 
                 var rooms = hotel.Rooms;
                 var roomsDto = _mapper.Map<List<RoomDto>>(rooms);
 
-                LogHotelRoomsInformation(request.HotelId, roomsDto.Count);
+                _logger.LogInformation($"Rooms in HotelId: {request.HotelId} - Count: {roomsDto.Count}");
+
 
                 return roomsDto;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred while handling GetRoomsInHotelQuery: {ex.Message}");
+                _logger.LogInformation($"An error occurred while handling GetRoomsInHotelQuery: {ex.Message}");
                 throw;
             }
-        }
-
-        private void LogHotelNotFound(Guid hotelId)
-        {
-            Console.WriteLine($"Hotel with ID {hotelId} not found.");
-        }
-
-        private void LogHotelRoomsInformation(Guid hotelId, int numberOfRooms)
-        {
-            Console.WriteLine($"Rooms in HotelId: {hotelId} - Count: {numberOfRooms}");
         }
     }
 }

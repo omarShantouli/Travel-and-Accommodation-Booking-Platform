@@ -17,7 +17,7 @@ namespace Infrastructure.Repositories
 
         public async Task<Hotels> GetByIdAsync(Guid id)
         {
-            var hotel = await _context.Hotels.Include(h => h.Rooms).Include(h => h.Owner).Include(h => h.City)
+            var hotel = await _context.Hotels.Include(h => h.Rooms).ThenInclude(r => r.Bookings).Include(h => h.Owner).Include(h => h.City)
                 .FirstOrDefaultAsync(h => h.Id == id);
 
             if (hotel == null)
@@ -30,7 +30,7 @@ namespace Infrastructure.Repositories
 
         public IEnumerable<Hotels> GetAll()
         {
-            return _context.Hotels.Include(h => h.Rooms).Include(h => h.Owner).Include(h => h.City);
+            return _context.Hotels.Include(h => h.Rooms).ThenInclude(r => r.Bookings).Include(h => h.Owner).Include(h => h.City);
         }
 
         public async Task<Hotels> CreateAsync(Hotels hotel)

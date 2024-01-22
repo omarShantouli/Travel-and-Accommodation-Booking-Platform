@@ -1,8 +1,10 @@
 ﻿using Application.Commands;
 using AutoMapper;
+using Castle.Core.Logging;
 using Domain.Entities;
 using Domain.Exceptions;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using static Domain.Interfaces.IRepository;
 
 namespace Application.Handlers
@@ -13,15 +15,17 @@ namespace Application.Handlers
     public class DeleteRoomFromHotelCommandHandler : IRequestHandler<DeleteRoomFromHotelCommand>
     {
         private readonly IRepository<Hotels> _hotelRepository;
+        private readonly ILogger<DeleteRoomFromHotelCommand> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteRoomFromHotelCommandHandler"/> class.
         /// </summary>
         /// <param name="hotelRepository">The repository for hotel entities.</param>
         /// <param name="mapper">The AutoMapper instance for object mapping.</param>
-        public DeleteRoomFromHotelCommandHandler(IRepository<Hotels> hotelRepository)
+        public DeleteRoomFromHotelCommandHandler(IRepository<Hotels> hotelRepository, ILogger<DeleteRoomFromHotelCommand> logger)
         {
             _hotelRepository = hotelRepository;
+            _logger = logger;
         }
 
         /// <summary>
@@ -49,18 +53,14 @@ namespace Application.Handlers
 
                 await _hotelRepository.SaveChangesAsync();
 
-                LogDeletionInformation(request.RoomId, request.HotelId);
+                _logger.LogInformation($"Room with ID {request.RoomId} deleted from HotelId: {request.HotelId}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred while handling DeleteRoomFromHotelCommand: {ex.Message}");
+                _logger.LogInformation($"An error occurred while handling DeleteRoomFromHotelCommand: {ex.Message}");
                 throw;
             }
         }
 
-        private void LogDeletionInformation(Guid roomId, Guid hotelId)
-        {
-            Console.WriteLine($"Room with ID {roomId} deleted from HotelId: {hotelId}");
-        }
     }
 }

@@ -1,8 +1,11 @@
 ﻿using Application.Commands.Hotel_Commands;
+using Castle.Core.Logging;
 using Domain.Entities;
 using Domain.Exceptions;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using static Domain.Interfaces.IRepository;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Application.Handlers.Hotel_Handler
 {
@@ -12,14 +15,16 @@ namespace Application.Handlers.Hotel_Handler
     public class DeleteImageFromHotelCommandHandler : IRequestHandler<DeleteImageFromHotelCommand>
     {
         private readonly IRepository<Images> _imageRepository;
+        private readonly ILogger<DeleteImageFromHotelCommandHandler> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteImageFromHotelCommandHandler"/> class.
         /// </summary>
         /// <param name="imageRepository">The repository for image entities.</param>
-        public DeleteImageFromHotelCommandHandler(IRepository<Images> imageRepository)
+        public DeleteImageFromHotelCommandHandler(IRepository<Images> imageRepository, ILogger<DeleteImageFromHotelCommandHandler> logger)
         {
             _imageRepository = imageRepository;
+            _logger = logger;
         }
 
         /// <summary>
@@ -40,16 +45,13 @@ namespace Application.Handlers.Hotel_Handler
                 await _imageRepository.DeleteAsync(request.ImageId);
                 await _imageRepository.SaveChangesAsync();
 
-                LogDeletionInformation(request.ImageId, request.HotelId);
+                _logger.LogInformation($"Image with ID {request.ImageId} deleted from HotelId: {request.HotelId}");
             }
             else
                 throw new EntityNotFoundException($"Hotel with ID {request.HotelId} does not " +
                                                     $"have an Image with ID {request.ImageId}!");
         }
 
-        private void LogDeletionInformation(Guid imageId, Guid hotelId)
-        {
-            Console.WriteLine($"Image with ID {imageId} deleted from HotelId: {hotelId}");
-        }
+       
     }
 }

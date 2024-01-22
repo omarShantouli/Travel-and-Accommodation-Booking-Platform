@@ -204,6 +204,34 @@
             No content with a 204 No Content status upon successful deletion.
             </returns>
         </member>
+        <member name="T:Travel_and_Accommodation_Booking_Platform.Controllers.HomeController">
+            <summary>
+            Controller for managing hotel-related operations.
+            </summary>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HomeController.#ctor(MediatR.IMediator,Microsoft.Extensions.Logging.ILogger{Travel_and_Accommodation_Booking_Platform.Controllers.HomeController})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController"/> class.
+            </summary>
+            <param name="mediator">The mediator for handling queries and commands.</param>
+            <param name="logger">The logger for capturing and logging information related to HotelController.</param>
+        </member>
+        <member name="M:Travel_and_Accommodation_Booking_Platform.Controllers.HomeController.SearchHotel(System.String,System.String,System.String,System.Single,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Searches for hotels based on the specified parameters.
+            </summary>
+            <param name="checkInDate">The check-in date for the hotel search.</param>
+            <param name="checkOutDate">The check-out date for the hotel search.</param>
+            <param name="city">The city for the hotel search.</param>
+            <param name="starRate">The star rate for the hotel search.</param>
+            <param name="sort">The sorting parameter for the hotel search.</param>
+            <param name="numberOfRooms">The number of rooms for the hotel search.</param>
+            <param name="adults">The number of adults for the hotel search.</param>
+            <param name="children">The number of children for the hotel search.</param>
+            <returns>
+            A list of hotel data transfer objects (DTOs) matching the search criteria.
+            </returns>
+        </member>
         <member name="T:Travel_and_Accommodation_Booking_Platform.Controllers.HotelController">
             <summary>
             Controller for managing hotel-related operations.

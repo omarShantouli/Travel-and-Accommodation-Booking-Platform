@@ -1,8 +1,11 @@
 ﻿using Application.DTOs;
 using Application.Queries;
 using AutoMapper;
+using Castle.Core.Logging;
 using Domain.Entities;
 using MediatR;
+using Microsoft.Extensions.Logging;
+using System.Reflection.Emit;
 using static Domain.Interfaces.IRepository;
 
 namespace Application.Handlers
@@ -15,6 +18,7 @@ namespace Application.Handlers
         private readonly IRepository<Rooms> _roomRepository;
         private readonly IRepository<Bookings> _bookingRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<GetAvailableRoomsInHotelQueryHandler> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetAvailableRoomsInHotelQueryHandler"/> class.
@@ -23,11 +27,13 @@ namespace Application.Handlers
         /// <param name="bookingRepository">The repository for booking entities.</param>
         /// <param name="mapper">The AutoMapper instance for object mapping.</param>
         public GetAvailableRoomsInHotelQueryHandler(IRepository<Rooms> roomRepository,
-                                                    IRepository<Bookings> bookingRepository, IMapper mapper)
+                                                    IRepository<Bookings> bookingRepository, IMapper mapper,
+                                                    ILogger<GetAvailableRoomsInHotelQueryHandler> logger)
         {
             _roomRepository = roomRepository;
             _bookingRepository = bookingRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         /// <summary>
@@ -48,20 +54,15 @@ namespace Application.Handlers
 
                 var availableRoomsDto = _mapper.Map<List<RoomDto>>(availableRooms);
 
-                LogAvailableRoomsInformation(request.HotelId, availableRoomsDto.Count);
+                _logger.LogInformation($"Available rooms in HotelId: {request.HotelId} - Count: {availableRoomsDto.Count}");
 
                 return availableRoomsDto;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred while handling GetAvailableRoomsInHotelQuery: {ex.Message}");
+                _logger.LogInformation($"An error occurred while handling GetAvailableRoomsInHotelQuery: {ex.Message}");
                 throw;
             }
-        }
-
-        private void LogAvailableRoomsInformation(Guid hotelId, int numberOfAvailableRooms)
-        {
-            Console.WriteLine($"Available rooms in HotelId: {hotelId} - Count: {numberOfAvailableRooms}");
         }
     }
 }

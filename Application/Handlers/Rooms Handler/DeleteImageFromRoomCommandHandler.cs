@@ -2,6 +2,7 @@
 using Domain.Entities;
 using Domain.Exceptions;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using static Domain.Interfaces.IRepository;
 
 namespace Application.Handlers.Rooms_Handler
@@ -12,12 +13,14 @@ namespace Application.Handlers.Rooms_Handler
     public class DeleteImageFromRoomCommandHandler : IRequestHandler<DeleteImageFromRoomCommand>
     {
         private readonly IRepository<Images> _imageRepository;
+        private readonly ILogger<DeleteImageFromRoomCommandHandler> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteImageFromRoomCommandHandler"/> class.
         /// </summary>
         /// <param name="imageRepository">The repository for image entities.</param>
-        public DeleteImageFromRoomCommandHandler(IRepository<Images> imageRepository)
+        public DeleteImageFromRoomCommandHandler(IRepository<Images> imageRepository, 
+                                                    ILogger<DeleteImageFromRoomCommandHandler> logger)
         {
             _imageRepository = imageRepository;
         }
@@ -42,7 +45,8 @@ namespace Application.Handlers.Rooms_Handler
                     await _imageRepository.DeleteAsync(request.ImageId);
                     await _imageRepository.SaveChangesAsync();
 
-                    LogImageDeletedFromRoom(request.RoomId, request.ImageId);
+                    _logger.LogInformation($"Image with ID {request.ImageId} deleted from Room with ID {request.RoomId}.");
+
                 }
                 else
                 {
@@ -51,14 +55,9 @@ namespace Application.Handlers.Rooms_Handler
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred while handling DeleteImageFromRoomCommand: {ex.Message}");
+                _logger.LogInformation($"An error occurred while handling DeleteImageFromRoomCommand: {ex.Message}");
                 throw;
             }
-        }
-
-        private void LogImageDeletedFromRoom(Guid roomId, Guid imageId)
-        {
-            Console.WriteLine($"Image with ID {imageId} deleted from Room with ID {roomId}.");
         }
     }
 }

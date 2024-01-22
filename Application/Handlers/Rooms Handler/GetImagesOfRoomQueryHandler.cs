@@ -1,9 +1,11 @@
 ﻿using Application.DTOs;
 using Application.Queries.Rooms_Queries;
 using AutoMapper;
+using Castle.Core.Logging;
 using Domain.Entities;
 using Domain.Enums;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using static Domain.Interfaces.IRepository;
 
 namespace Application.Handlers.GetImagesOfRoomQueryHandler
@@ -15,16 +17,19 @@ namespace Application.Handlers.GetImagesOfRoomQueryHandler
     {
         private readonly IRepository<Images> _imageRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<GetImagesOfRoomQueryHandler> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetImagesOfRoomQueryHandler"/> class.
         /// </summary>
         /// <param name="imageRepository">The repository for image entities.</param>
         /// <param name="mapper">The AutoMapper instance for object mapping.</param>
-        public GetImagesOfRoomQueryHandler(IRepository<Images> imageRepository, IMapper mapper)
+        public GetImagesOfRoomQueryHandler(IRepository<Images> imageRepository, IMapper mapper,
+                                            ILogger<GetImagesOfRoomQueryHandler> logger)
         {
             _imageRepository = imageRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         /// <summary>
@@ -43,20 +48,16 @@ namespace Application.Handlers.GetImagesOfRoomQueryHandler
 
                 var imagesDtos = _mapper.Map<List<ImageDto>>(roomImages);
 
-                LogRoomImagesRetrieved(request.RoomId);
+                _logger.LogInformation($"Images retrieved for Room with ID {request.RoomId}.");
+
 
                 return imagesDtos;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred while handling GetImagesOfRoomQuery: {ex.Message}");
+                _logger.LogInformation($"An error occurred while handling GetImagesOfRoomQuery: {ex.Message}");
                 throw;
             }
-        }
-
-        private void LogRoomImagesRetrieved(Guid roomId)
-        {
-            Console.WriteLine($"Images retrieved for Room with ID {roomId}.");
         }
     }
 }

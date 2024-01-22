@@ -1,9 +1,11 @@
 ﻿using Application.DTOs;
 using Application.Queries;
 using AutoMapper;
+using Castle.Core.Logging;
 using Domain.Entities;
 using Domain.Enums;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using static Domain.Interfaces.IRepository;
 
 namespace Application.Handlers.Hotel_Handler
@@ -15,16 +17,19 @@ namespace Application.Handlers.Hotel_Handler
     {
         private readonly IRepository<Images> _imageRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<GetImagesOfHotelQueryHandler> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetImagesOfHotelQueryHandler"/> class.
         /// </summary>
         /// <param name="imageRepository">The repository for image entities.</param>
         /// <param name="mapper">The AutoMapper instance for object mapping.</param>
-        public GetImagesOfHotelQueryHandler(IRepository<Images> imageRepository, IMapper mapper)
+        public GetImagesOfHotelQueryHandler(IRepository<Images> imageRepository, IMapper mapper,
+                                            ILogger<GetImagesOfHotelQueryHandler> logger)
         {
             _imageRepository = imageRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         /// <summary>
@@ -44,20 +49,15 @@ namespace Application.Handlers.Hotel_Handler
 
                 var imagesDtos = _mapper.Map<List<ImageDto>>(hotelImages);
 
-                LogHotelImagesInformation(request.HotelId, imagesDtos.Count);
+                _logger.LogInformation($"Images of HotelId: {request.HotelId} - Count: {imagesDtos.Count}");
 
                 return imagesDtos;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred while handling GetImagesOfHotelQuery: {ex.Message}");
+                _logger.LogInformation($"An error occurred while handling GetImagesOfHotelQuery: {ex.Message}");
                 throw;
             }
-        }
-
-        private void LogHotelImagesInformation(Guid hotelId, int numberOfImages)
-        {
-            Console.WriteLine($"Images of HotelId: {hotelId} - Count: {numberOfImages}");
         }
     }
 }
