@@ -1,7 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Queries;
 using AutoMapper;
-using Castle.Core.Logging;
 using Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;

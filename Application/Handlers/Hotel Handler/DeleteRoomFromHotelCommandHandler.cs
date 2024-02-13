@@ -1,6 +1,4 @@
 ﻿using Application.Commands;
-using AutoMapper;
-using Castle.Core.Logging;
 using Domain.Entities;
 using Domain.Exceptions;
 using MediatR;

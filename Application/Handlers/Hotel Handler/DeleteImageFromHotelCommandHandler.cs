@@ -1,11 +1,9 @@
 ﻿using Application.Commands.Hotel_Commands;
-using Castle.Core.Logging;
 using Domain.Entities;
 using Domain.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using static Domain.Interfaces.IRepository;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Application.Handlers.Hotel_Handler
 {

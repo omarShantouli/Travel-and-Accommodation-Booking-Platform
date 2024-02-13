@@ -12,7 +12,7 @@ namespace Infrastructure.Repositories
         private readonly ApplicationDbContext _context;
         public AppUserRepository(ApplicationDbContext context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            this._context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public async Task<AppUser> GetByIdAsync(Guid id)
